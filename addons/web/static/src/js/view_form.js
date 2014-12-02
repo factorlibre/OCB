@@ -117,6 +117,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
         this.mutating_mutex = new $.Mutex();
         this.on_change_list = [];
         this.save_list = [];
+        this.render_value_defs = [];
         this.reload_mutex = new $.Mutex();
         this.__clicked_inside = false;
         this.__blur_timeout = null;
@@ -689,6 +690,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
         } else if (mode === "create") {
             mode = "edit";
         }
+        this.render_value_defs = [];
         this.set({actual_mode: mode});
     },
     check_actual_mode: function(source, options) {
@@ -739,12 +741,15 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
         });
     },
     on_button_cancel: function(event) {
+        var self = this;
         if (this.can_be_discarded()) {
             if (this.get('actual_mode') === 'create') {
                 this.trigger('history_back');
             } else {
                 this.to_view_mode();
-                this.trigger('load_record', this.datarecord);
+                $.when.apply(null, this.render_value_defs).then(function(){
+                    self.trigger('load_record', self.datarecord);
+                });
             }
         }
         this.trigger('on_button_cancel');
@@ -965,9 +970,12 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
                         context: {
                             'bin_size': true,
                             'future_display_name': true
-                        }
+                        },
+                        check_access_rule: true
                     }).then(function(r) {
                         self.trigger('load_record', r);
+                    }).fail(function (){
+                        self.do_action('history_back');
                     });
             }
         });
@@ -1975,8 +1983,10 @@ instance.web.form.WidgetButton = instance.web.form.FormWidget.extend({
 
         return this.view.do_execute_action(
             _.extend({}, this.node.attrs, {context: context}),
-            this.view.dataset, this.view.datarecord.id, function () {
-                self.view.recursive_reload();
+            this.view.dataset, this.view.datarecord.id, function (reason) {
+                if (!_.isObject(reason)) {
+                    self.view.recursive_reload();
+                }
             });
     },
     check_disable: function() {
@@ -2242,7 +2252,10 @@ instance.web.form.ReinitializeWidgetMixin =  {
 instance.web.form.ReinitializeFieldMixin =  _.extend({}, instance.web.form.ReinitializeWidgetMixin, {
     reinitialize: function() {
         instance.web.form.ReinitializeWidgetMixin.reinitialize.call(this);
-        this.render_value();
+        var res = this.render_value();
+        if (this.view && this.view.render_value_defs){
+            this.view.render_value_defs.push(res);
+        }
     },
 });
 
@@ -2718,7 +2731,7 @@ instance.web.form.FieldTextHtml = instance.web.form.AbstractField.extend(instanc
         if (! this.get("effective_readonly")) {
             self._updating_editor = false;
             this.$textarea = this.$el.find('textarea');
-            var width = ((this.node.attrs || {}).editor_width || '100%');
+            var width = ((this.node.attrs || {}).editor_width || 'calc(100% - 4px)');
             var height = ((this.node.attrs || {}).editor_height || 250);
             this.$textarea.cleditor({
                 width:      width, // width not including margins, borders or padding
@@ -3877,28 +3890,24 @@ instance.web.form.One2ManyListView = instance.web.ListView.extend({
         this.o2m.trigger_on_change();
     },
     is_valid: function () {
-        var editor = this.editor;
-        var form = editor.form;
-        // If no edition is pending, the listview can not be invalid (?)
-        if (!editor.record) {
-            return true
-        }
-        // If the form has not been modified, the view can only be valid
-        // NB: is_dirty will also be set on defaults/onchanges/whatever?
-        // oe_form_dirty seems to only be set on actual user actions
-        if (!form.$el.is('.oe_form_dirty')) {
+        var self = this;
+        if (!this.fields_view || !this.editable()){
             return true;
         }
-        this.o2m._dirty_flag = true;
-
-        // Otherwise validate internal form
-        return _(form.fields).chain()
-            .invoke(function () {
-                this._check_css_flags();
-                return this.is_valid();
-            })
-            .all(_.identity)
-            .value();
+        var r;
+        return _.every(this.records.records, function(record){
+            r = record;
+            _.each(self.editor.form.fields, function(field){
+                field._inhibit_on_change_flag = true;
+                field.set_value(r.attributes[field.name]);
+                field._inhibit_on_change_flag = false;
+            });
+            return _.every(self.editor.form.fields, function(field){
+                field.process_modifiers();
+                field._check_css_flags();
+                return field.is_valid();
+            });
+        });
     },
     do_add_record: function () {
         if (this.editable()) {
@@ -4266,7 +4275,7 @@ instance.web.form.FieldMany2ManyTags = instance.web.form.AbstractField.extend(in
             }
         };
         if (! values || values.length > 0) {
-            this._display_orderer.add(dataset.name_get(values)).done(handle_names);
+            return this._display_orderer.add(dataset.name_get(values)).done(handle_names);
         } else {
             handle_names([]);
         }
@@ -5197,6 +5206,20 @@ instance.web.form.FieldBinaryImage = instance.web.form.FieldBinary.extend({
         this._super.apply(this, arguments);
         this.render_value();
         this.set_filename('');
+    },
+    set_value: function(value_){
+        var changed = value_ !== this.get_value();
+        this._super.apply(this, arguments);
+        // By default, on binary images read, the server returns the binary size
+        // This is possible that two images have the exact same size
+        // Therefore we trigger the change in case the image value hasn't changed
+        // So the image is re-rendered correctly
+        if (!changed){
+            this.trigger("change:value", this, {
+                oldValue: value_,
+                newValue: value_
+            });
+        }
     }
 });
 
@@ -5206,7 +5229,7 @@ instance.web.form.FieldBinaryImage = instance.web.form.FieldBinary.extend({
  * Options on attribute ; "blockui" {Boolean} block the UI or not
  * during the file is uploading
  */
-instance.web.form.FieldMany2ManyBinaryMultiFiles = instance.web.form.AbstractField.extend({
+instance.web.form.FieldMany2ManyBinaryMultiFiles = instance.web.form.AbstractField.extend(instance.web.form.ReinitializeFieldMixin, {
     template: "FieldBinaryFileUploader",
     init: function(field_manager, node) {
         this._super(field_manager, node);
@@ -5219,8 +5242,7 @@ instance.web.form.FieldMany2ManyBinaryMultiFiles = instance.web.form.AbstractFie
         this.fileupload_id = _.uniqueId('oe_fileupload_temp');
         $(window).on(this.fileupload_id, _.bind(this.on_file_loaded, this));
     },
-    start: function() {
-        this._super(this);
+    initialize_content: function() {
         this.$el.on('change', 'input.oe_form_binary_file', this.on_file_change );
     },
     set_value: function(value_) {

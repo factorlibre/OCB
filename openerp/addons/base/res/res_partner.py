@@ -81,27 +81,29 @@ def _tz_get(self,cr,uid, context=None):
 class res_partner_category(osv.osv):
 
     def name_get(self, cr, uid, ids, context=None):
-        """Return the categories' display name, including their direct
-           parent by default.
+        """ Return the categories' display name, including their direct
+            parent by default.
 
-        :param dict context: the ``partner_category_display`` key can be
-                             used to select the short version of the
-                             category name (without the direct parent),
-                             when set to ``'short'``. The default is
-                             the long version."""
+            If ``context['partner_category_display']`` is ``'short'``, the short
+            version of the category name (without the direct parent) is used.
+            The default is the long version.
+        """
+        if not isinstance(ids, list):
+            ids = [ids]
         if context is None:
             context = {}
+
         if context.get('partner_category_display') == 'short':
             return super(res_partner_category, self).name_get(cr, uid, ids, context=context)
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        reads = self.read(cr, uid, ids, ['name', 'parent_id'], context=context)
+
         res = []
-        for record in reads:
-            name = record['name']
-            if record['parent_id']:
-                name = record['parent_id'][1] + ' / ' + name
-            res.append((record['id'], name))
+        for category in self.browse(cr, uid, ids, context=context):
+            names = []
+            current = category
+            while current:
+                names.append(current.name)
+                current = current.parent_id
+            res.append((category.id, ' / '.join(reversed(names))))
         return res
 
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
@@ -218,6 +220,7 @@ class res_partner(osv.osv, format_address):
         'date': fields.date('Date', select=1),
         'title': fields.many2one('res.partner.title', 'Title'),
         'parent_id': fields.many2one('res.partner', 'Related Company', select=True),
+        'parent_name': fields.related('parent_id', 'name', type='char', readonly=True, string='Parent name'),
         'child_ids': fields.one2many('res.partner', 'parent_id', 'Contacts', domain=[('active','=',True)]), # force "active_test" domain to bypass _search() override    
         'ref': fields.char('Reference', size=64, select=1),
         'lang': fields.selection(_lang_get, 'Language',
@@ -344,6 +347,7 @@ class res_partner(osv.osv, format_address):
         value = {}
         value['title'] = False
         if is_company:
+            value['use_parent_address'] = False
             domain = {'title': [('domain', '=', 'partner')]}
         else:
             domain = {'title': [('domain', '=', 'contact')]}
@@ -363,9 +367,10 @@ class res_partner(osv.osv, format_address):
                                                       'was never correctly set. If an existing contact starts working for a new '
                                                       'company then a new contact should be created under that new '
                                                       'company. You can use the "Discard" button to abandon this change.')}
-            parent = self.browse(cr, uid, parent_id, context=context)
-            address_fields = self._address_fields(cr, uid, context=context)
-            result['value'] = dict((key, value_or_id(parent[key])) for key in address_fields)
+            if use_parent_address:
+                parent = self.browse(cr, uid, parent_id, context=context)
+                address_fields = self._address_fields(cr, uid, context=context)
+                result['value'] = dict((key, value_or_id(parent[key])) for key in address_fields)
         else:
             result['value'] = {'use_parent_address': False}
         return result
@@ -431,17 +436,31 @@ class res_partner(osv.osv, format_address):
     def _commercial_sync_from_company(self, cr, uid, partner, context=None):
         """ Handle sync of commercial fields when a new parent commercial entity is set,
         as if they were related fields """
-        if partner.commercial_partner_id != partner:
+        commercial_partner = partner.commercial_partner_id
+        if not commercial_partner:
+            # On child partner creation of a parent partner,
+            # the commercial_partner_id is not yet computed
+            commercial_partner_id = self._commercial_partner_compute(
+                cr, uid, [partner.id], 'commercial_partner_id', [], context=context)[partner.id]
+            commercial_partner = self.browse(cr, uid, commercial_partner_id, context=context)
+        if commercial_partner != partner:
             commercial_fields = self._commercial_fields(cr, uid, context=context)
-            sync_vals = self._update_fields_values(cr, uid, partner.commercial_partner_id,
-                                                        commercial_fields, context=context)
+            sync_vals = self._update_fields_values(cr, uid, commercial_partner,
+                                                   commercial_fields, context=context)
             partner.write(sync_vals)
 
     def _commercial_sync_to_children(self, cr, uid, partner, context=None):
         """ Handle sync of commercial fields to descendants """
         commercial_fields = self._commercial_fields(cr, uid, context=context)
-        sync_vals = self._update_fields_values(cr, uid, partner.commercial_partner_id,
-                                                   commercial_fields, context=context)
+        commercial_partner = partner.commercial_partner_id
+        if not commercial_partner:
+            # On child partner creation of a parent partner,
+            # the commercial_partner_id is not yet computed
+            commercial_partner_id = self._commercial_partner_compute(
+                cr, uid, [partner.id], 'commercial_partner_id', [], context=context)[partner.id]
+            commercial_partner = self.browse(cr, uid, commercial_partner_id, context=context)
+        sync_vals = self._update_fields_values(cr, uid, commercial_partner,
+                                               commercial_fields, context=context)
         sync_children = [c for c in partner.child_ids if not c.is_company]
         for child in sync_children:
             self._commercial_sync_to_children(cr, uid, child, context=context)
@@ -490,6 +509,14 @@ class res_partner(osv.osv, format_address):
             parent.update_address(addr_vals)
             if not parent.is_company:
                 parent.write({'is_company': True})
+
+    def unlink(self, cr, uid, ids, context=None):
+        orphan_contact_ids = self.search(cr, uid,
+            [('parent_id', 'in', ids), ('id', 'not in', ids), ('use_parent_address', '=', True)], context=context)
+        if orphan_contact_ids:
+            # no longer have a parent address
+            self.write(cr, uid, orphan_contact_ids, {'use_parent_address': False}, context=context)
+        return super(res_partner, self).unlink(cr, uid, ids, context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
         if isinstance(ids, (int, long)):
@@ -545,7 +572,7 @@ class res_partner(osv.osv, format_address):
         for record in self.browse(cr, uid, ids, context=context):
             name = record.name
             if record.parent_id and not record.is_company:
-                name =  "%s, %s" % (record.parent_id.name, name)
+                name = "%s, %s" % (record.parent_name, name)
             if context.get('show_address'):
                 name = name + "\n" + self._display_address(cr, uid, record, without_company=True, context=context)
                 name = name.replace('\n\n','\n')
@@ -761,7 +788,7 @@ class res_partner(osv.osv, format_address):
             'state_name': address.state_id and address.state_id.name or '',
             'country_code': address.country_id and address.country_id.code or '',
             'country_name': address.country_id and address.country_id.name or '',
-            'company_name': address.parent_id and address.parent_id.name or '',
+            'company_name': address.parent_id and address.parent_name or '',
         }
         for field in self._address_fields(cr, uid, context=context):
             args[field] = getattr(address, field) or ''

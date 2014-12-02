@@ -750,9 +750,8 @@ class stock_picking(osv.osv):
         if ('name' not in default) or (picking_obj.name == '/'):
             seq_obj_name = 'stock.picking.' + picking_obj.type
             default['name'] = self.pool.get('ir.sequence').get(cr, uid, seq_obj_name)
-            default['backorder_id'] = False
-        if 'origin' not in default:
-            default['origin'] = ''
+            default.setdefault('origin', False)
+            default.setdefault('backorder_id', False)
         if 'invoice_state' not in default and picking_obj.invoice_state == 'invoiced':
             default['invoice_state'] = '2binvoiced'
         res = super(stock_picking, self).copy(cr, uid, id, default, context)
@@ -1051,7 +1050,6 @@ class stock_picking(osv.osv):
             'origin': (invoice.origin or '') + ', ' + (picking.name or '') + (picking.origin and (':' + picking.origin) or ''),
             'comment': (comment and (invoice.comment and invoice.comment + "\n" + comment or comment)) or (invoice.comment and invoice.comment or ''),
             'date_invoice': context.get('date_inv', False),
-            'user_id': uid,
         }
 
     def _prepare_invoice(self, cr, uid, picking, partner, inv_type, journal_id, context=None):
@@ -1245,7 +1243,9 @@ class stock_picking(osv.osv):
             context = {}
         for pick in self.browse(cr, uid, ids, context=context):
             if pick.state in ['done','cancel']:
-                raise osv.except_osv(_('Error!'), _('You cannot remove the picking which is in %s state!')%(pick.state,))
+                # retrieve the string value of field in user's language
+                state = dict(self.fields_get(cr, uid, context=context)['state']['selection']).get(pick.state, pick.state)
+                raise osv.except_osv(_('Error!'), _('You cannot remove the picking which is in %s state!')%(state,))
             else:
                 ids2 = [move.id for move in pick.move_lines]
                 ctx = context.copy()
@@ -1280,20 +1280,21 @@ class stock_picking(osv.osv):
         for pick in self.browse(cr, uid, ids, context=context):
             new_picking = None
             complete, too_many, too_few = [], [], []
-            move_product_qty, prodlot_ids, product_avail, partial_qty, product_uoms = {}, {}, {}, {}, {}
+            move_product_qty, prodlot_ids, product_avail, partial_qty, uos_qty, product_uoms = {}, {}, {}, {}, {}, {}
             for move in pick.move_lines:
                 if move.state in ('done', 'cancel'):
                     continue
                 partial_data = partial_datas.get('move%s'%(move.id), {})
                 product_qty = partial_data.get('product_qty',0.0)
                 move_product_qty[move.id] = product_qty
-                product_uom = partial_data.get('product_uom',False)
+                product_uom = partial_data.get('product_uom', move.product_uom.id)
                 product_price = partial_data.get('product_price',0.0)
                 product_currency = partial_data.get('product_currency',False)
                 prodlot_id = partial_data.get('prodlot_id')
                 prodlot_ids[move.id] = prodlot_id
                 product_uoms[move.id] = product_uom
                 partial_qty[move.id] = uom_obj._compute_qty(cr, uid, product_uoms[move.id], product_qty, move.product_uom.id)
+                uos_qty[move.id] = move.product_id._compute_uos_qty(product_uom, product_qty, move.product_uos) if product_qty else 0.0
                 if move.product_qty == partial_qty[move.id]:
                     complete.append(move)
                 elif move.product_qty > partial_qty[move.id]:
@@ -1336,16 +1337,18 @@ class stock_picking(osv.osv):
 
                         product_avail[product.id] += qty
 
-
+            # every line of the picking is empty, do not generate anything
+            empty_picking = not any(q for q in move_product_qty.values() if q > 0)
 
             for move in too_few:
                 product_qty = move_product_qty[move.id]
-                if not new_picking:
+                if not new_picking and not empty_picking:
                     new_picking_name = pick.name
                     self.write(cr, uid, [pick.id], 
                                {'name': sequence_obj.get(cr, uid,
                                             'stock.picking.%s'%(pick.type)),
                                })
+                    pick.refresh()
                     new_picking = self.copy(cr, uid, pick.id,
                             {
                                 'name': new_picking_name,
@@ -1355,7 +1358,7 @@ class stock_picking(osv.osv):
                 if product_qty != 0:
                     defaults = {
                             'product_qty' : product_qty,
-                            'product_uos_qty': product_qty, #TODO: put correct uos_qty
+                            'product_uos_qty': uos_qty[move.id],
                             'picking_id' : new_picking,
                             'state': 'assigned',
                             'move_dest_id': move.move_dest_id.id,
@@ -1369,7 +1372,7 @@ class stock_picking(osv.osv):
                 move_obj.write(cr, uid, [move.id],
                         {
                             'product_qty': move.product_qty - partial_qty[move.id],
-                            'product_uos_qty': move.product_qty - partial_qty[move.id], #TODO: put correct uos_qty
+                            'product_uos_qty': move.product_uos_qty - uos_qty[move.id],
                             'prodlot_id': False,
                             'tracking_id': False,
                         })
@@ -1385,7 +1388,7 @@ class stock_picking(osv.osv):
                 product_qty = move_product_qty[move.id]
                 defaults = {
                     'product_qty' : product_qty,
-                    'product_uos_qty': product_qty, #TODO: put correct uos_qty
+                    'product_uos_qty': uos_qty[move.id],
                     'product_uom': product_uoms[move.id]
                 }
                 prodlot_id = prodlot_ids.get(move.id)
@@ -1403,9 +1406,10 @@ class stock_picking(osv.osv):
                 self.action_move(cr, uid, [new_picking], context=context)
                 wf_service.trg_validate(uid, 'stock.picking', new_picking, 'button_done', cr)
                 wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
+                delivered_pack_id = new_picking
+                self.message_post(cr, uid, new_picking, body=_("Back order <em>%s</em> has been <b>created</b>.") % (pick.name), context=context)
+            elif empty_picking:
                 delivered_pack_id = pick.id
-                back_order_name = self.browse(cr, uid, delivered_pack_id, context=context).name
-                self.message_post(cr, uid, new_picking, body=_("Back order <em>%s</em> has been <b>created</b>.") % (back_order_name), context=context)
             else:
                 self.action_move(cr, uid, [pick.id], context=context)
                 wf_service.trg_validate(uid, 'stock.picking', pick.id, 'button_done', cr)
@@ -1527,7 +1531,7 @@ class stock_production_lot(osv.osv):
         'product_id': lambda x, y, z, c: c.get('product_id', False),
     }
     _sql_constraints = [
-        ('name_ref_uniq', 'unique (name, ref)', 'The combination of Serial Number and internal reference must be unique !'),
+        ('name_ref_uniq', 'unique (name, ref, product_id, company_id)', 'The combination of Serial Number, internal reference, Product and Company must be unique !'),
     ]
     def action_traceability(self, cr, uid, ids, context=None):
         """ It traces the information of a product
@@ -1676,7 +1680,7 @@ class stock_move(osv.osv):
         'location_dest_id': fields.many2one('stock.location', 'Destination Location', required=True,states={'done': [('readonly', True)]}, select=True, help="Location where the system will stock the finished products."),
         'partner_id': fields.many2one('res.partner', 'Destination Address ', states={'done': [('readonly', True)]}, help="Optional address where goods are to be delivered, specifically used for allotment"),
 
-        'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', states={'done': [('readonly', True)]}, help="Serial number is used to put a serial number on the production", select=True),
+        'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', help="Serial number is used to put a serial number on the production", select=True, ondelete='restrict'),
         'tracking_id': fields.many2one('stock.tracking', 'Pack', select=True, states={'done': [('readonly', True)]}, help="Logistical shipping unit: pallet, box, pack ..."),
 
         'auto_validate': fields.boolean('Auto Validate'),
@@ -1980,14 +1984,13 @@ class stock_move(osv.osv):
         product = self.pool.get('product.product').browse(cr, uid, [prod_id], context=ctx)[0]
         uos_id  = product.uos_id and product.uos_id.id or False
         result = {
+            'name': product.partner_ref,
             'product_uom': product.uom_id.id,
             'product_uos': uos_id,
             'product_qty': 1.00,
             'product_uos_qty' : self.pool.get('stock.move').onchange_quantity(cr, uid, ids, prod_id, 1.00, product.uom_id.id, uos_id)['value']['product_uos_qty'],
             'prodlot_id' : False,
         }
-        if not ids:
-            result['name'] = product.partner_ref
         if loc_id:
             result['location_id'] = loc_id
         if loc_dest_id:
@@ -2257,16 +2260,24 @@ class stock_move(osv.osv):
         return count
 
     def setlast_tracking(self, cr, uid, ids, context=None):
-        tracking_obj = self.pool.get('stock.tracking')
-        picking = self.browse(cr, uid, ids, context=context)[0].picking_id
-        if picking:
-            last_track = [line.tracking_id.id for line in picking.move_lines if line.tracking_id]
-            if not last_track:
-                last_track = tracking_obj.create(cr, uid, {}, context=context)
+        assert len(ids) == 1, "1 ID expected, got %s" % (ids, )
+        tracking_obj = self.pool['stock.tracking']
+        move = self.browse(cr, uid, ids[0], context=context)
+        picking_id = move.picking_id.id
+        if picking_id:
+            move_ids = self.search(cr, uid, [
+                ('picking_id', '=', picking_id),
+                ('tracking_id', '!=', False)
+                ], limit=1, order='tracking_id DESC', context=context)
+            if move_ids:
+                tracking_move = self.browse(cr, uid, move_ids[0],
+                                            context=context)
+                tracking_id = tracking_move.tracking_id.id
             else:
-                last_track.sort()
-                last_track = last_track[-1]
-            self.write(cr, uid, ids, {'tracking_id': last_track})
+                tracking_id = tracking_obj.create(cr, uid, {}, context=context)
+            self.write(cr, uid, move.id,
+                       {'tracking_id': tracking_id},
+                       context=context)
         return True
 
     #
@@ -2389,6 +2400,9 @@ class stock_move(osv.osv):
                 context = {}
             src_company_ctx = dict(context,force_company=move.location_id.company_id.id)
             dest_company_ctx = dict(context,force_company=move.location_dest_id.company_id.id)
+            # do not take the company of the one of the user
+            # used to select the correct period
+            company_ctx = dict(context, company_id=move.company_id.id)
             account_moves = []
             # Outgoing moves (or cross-company output part)
             if move.location_id.company_id \
@@ -2420,7 +2434,8 @@ class stock_move(osv.osv):
                         {
                          'journal_id': j_id,
                          'line_id': move_lines,
-                         'ref': move.picking_id and move.picking_id.name}, context=context)
+                         'company_id': move.company_id.id,
+                         'ref': move.picking_id and move.picking_id.name}, context=company_ctx)
 
     def action_done(self, cr, uid, ids, context=None):
         """ Makes the move done and if all moves are done, it will finish the picking.

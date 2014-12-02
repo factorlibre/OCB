@@ -273,7 +273,7 @@ class res_partner(osv.osv):
                     if date <= current_date and aml['balance'] > 0:
                         strbegin = "<TD><B>"
                         strend = "</B></TD>"
-                    followup_table +="<TR>" + strbegin + str(aml['date']) + strend + strbegin + aml['name'] + strend + strbegin + aml['ref'] + strend + strbegin + str(date) + strend + strbegin + str(aml['balance']) + strend + strbegin + block + strend + "</TR>"
+                    followup_table +="<TR>" + strbegin + str(aml['date']) + strend + strbegin + aml['name'] + strend + strbegin + (aml['ref'] or '') + strend + strbegin + str(date) + strend + strbegin + str(aml['balance']) + strend + strbegin + block + strend + "</TR>"
                 total = rml_parse.formatLang(total, dp='Account', currency_obj=currency)
                 followup_table += '''<tr> </tr>
                                 </table>
@@ -293,6 +293,13 @@ class res_partner(osv.osv):
                                       model = 'res.partner', res_id = part.id, 
                                       partner_ids = [responsible_partner_id])
         return super(res_partner, self).write(cr, uid, ids, vals, context=context)
+    
+    def copy(self, cr, uid, record_id, default=None, context=None):
+        if default is None:
+            default = {}
+
+        default.update({'unreconciled_aml_ids': []})
+        return super(res_partner, self).copy(cr, uid, record_id, default, context) 
 
     def action_done(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'payment_next_action_date': False, 'payment_next_action':'', 'payment_responsible_id': False}, context=context)

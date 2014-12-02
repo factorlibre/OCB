@@ -22,9 +22,9 @@ instance.web.ActionManager = instance.web.Widget.extend({
         this._super.apply(this, arguments);
         this.$el.on('click', 'a.oe_breadcrumb_item', this.on_breadcrumb_clicked);
     },
-    dialog_stop: function () {
+    dialog_stop: function (reason) {
         if (this.dialog) {
-            this.dialog.destroy();
+            this.dialog.destroy(reason);
         }
         this.dialog = null;
     },
@@ -333,12 +333,13 @@ instance.web.ActionManager = instance.web.Widget.extend({
         var type = action.type.replace(/\./g,'_');
         var popup = action.target === 'new';
         var inline = action.target === 'inline' || action.target === 'inlineview';
+        var form = _.str.startsWith(action.view_mode, 'form');
         action.flags = _.defaults(action.flags || {}, {
             views_switcher : !popup && !inline,
             search_view : !popup && !inline,
             action_buttons : !popup && !inline,
             sidebar : !popup && !inline,
-            pager : !popup && !inline,
+            pager : (!popup || !form) && !inline,
             display_title : !popup,
             search_disable_custom_filters: action.context && action.context.search_disable_custom_filters
         });
@@ -374,23 +375,35 @@ instance.web.ActionManager = instance.web.Widget.extend({
         }
         var widget = executor.widget();
         if (executor.action.target === 'new') {
-            if(this.dialog == null) {
-                if (this.dialog_widget && !this.dialog_widget.isDestroyed()) {
-                    this.dialog_widget.destroy();
-                }
-                this.dialog_stop();
-                this.dialog = new instance.web.Dialog(this, {
-                    dialogClass: executor.klass,
-                });
-                if (options.on_close) {
-                    this.dialog.on("closing", null, function() {
-                        self.dialog = null;
-                        options.on_close.apply(null, arguments)
-                    });
-                }
-            } else {
+            var pre_dialog = this.dialog;
+            if (pre_dialog){
+                // prevent previous dialog to consider itself closed,
+                // right now, as we're opening a new one (prevents
+                // reload of original form view)
+                pre_dialog.off('closing', null, pre_dialog.on_close);
+            }
+            if (this.dialog_widget && !this.dialog_widget.isDestroyed()) {
                 this.dialog_widget.destroy();
             }
+            // explicitly passing a closing action to dialog_stop() prevents
+            // it from reloading the original form view
+            this.dialog_stop(executor.action);
+            this.dialog = new instance.web.Dialog(this, {
+                dialogClass: executor.klass,
+            });
+
+            // chain on_close triggers with previous dialog, if any
+            this.dialog.on_close = function(){
+                options.on_close.apply(null, arguments);
+                if (pre_dialog && pre_dialog.on_close){
+                    // no parameter passed to on_close as this will
+                    // only be called when the last dialog is truly
+                    // closing, and *should* trigger a reload of the
+                    // underlying form view (see comments above)
+                    pre_dialog.on_close();
+                }
+            };
+            this.dialog.on("closing", null, this.dialog.on_close);
             this.dialog.dialog_title = executor.action.name;
             if (widget instanceof instance.web.ViewManager) {
                 _.extend(widget.flags, {
@@ -404,7 +417,10 @@ instance.web.ActionManager = instance.web.Widget.extend({
             this.dialog.open();
             return initialized;
         } else  {
-            this.dialog_stop();
+            // explicitly passing a closing action to dialog_stop() prevents
+            // it from reloading the original form view - we're opening a
+            // completely new action anyway
+            this.dialog_stop(executor.action);
             this.inner_action = executor.action;
             this.inner_widget = widget;
             executor.post_process(widget);
@@ -663,8 +679,8 @@ instance.web.ViewManager =  instance.web.Widget.extend({
         var container = this.$el.find("> .oe_view_manager_body > .oe_view_manager_view_" + view_type);
         var view_promise = controller.appendTo(container);
         this.views[view_type].controller = controller;
-        this.views[view_type].deferred.resolve(view_type);
         return $.when(view_promise).done(function() {
+            self.views[view_type].deferred.resolve(view_type);
             if (self.searchview
                     && self.flags.auto_search
                     && view.controller.searchable !== false) {
@@ -1081,7 +1097,7 @@ instance.web.ViewManagerAction = instance.web.ViewManager.extend({
             );
         } 
 
-        $.when(defs).done(function() {
+        $.when(this.views[this.active_view] ? this.views[this.active_view].deferred : $.when(), defs).done(function() {
             self.views[self.active_view].controller.do_load_state(state, warm);
         });
     },

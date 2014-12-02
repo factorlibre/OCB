@@ -1158,6 +1158,19 @@ class account_move(osv.osv):
     _description = "Account Entry"
     _order = 'id desc'
 
+    def account_assert_balanced(self, cr, uid, context=None):
+        cr.execute("""\
+            SELECT      move_id
+            FROM        account_move_line
+            WHERE       state = 'valid'
+            GROUP BY    move_id
+            HAVING      abs(sum(debit) - sum(credit)) > 0.00001
+            """)
+        assert len(cr.fetchall()) == 0, \
+            "For all Journal Items, the state is valid implies that the sum " \
+            "of credits equals the sum of debits"
+        return True
+
     def account_move_prepare(self, cr, uid, journal_id, date=False, ref='', company_id=False, context=None):
         '''
         Prepares and returns a dictionary of values, ready to be passed to create() based on the parameters received.
@@ -1668,40 +1681,8 @@ class account_move_reconcile(osv.osv):
                     return False
         return True
 
-    # To reconcile journal items must have same account
-    def _check_same_account(self,cr,uid,ids,context=None):
-        for rec_line in self.browse(cr, uid, ids, context=context):
-            move_lines  = []
-            if not rec_line.opening_reconciliation:
-                if rec_line.line_id:
-                    first_account = rec_line.line_id[0].account_id.id
-                    move_lines = rec_line.line_id
-                elif rec_line.line_partial_ids:
-                    first_account = rec_line.line_partial_ids[0].account_id.id
-                    move_lines = rec_line.line_partial_ids
-                for line in move_lines:
-                    if line.account_id.id != first_account:
-                        return False
-        return True
-        
-    # To reconcile allow reconcilation must be True in account
-    def _check_allow_reconcile(self, cr, uid, ids, context=None):
-        for move_line in self.browse(cr ,uid ,ids ,context=context):
-            lines = []
-            if not move_line.opening_reconciliation:
-                if move_line.line_id:
-                    lines = move_line.line_id
-                elif move_line.line_partial_ids:
-                    lines = move_line.line_partial_ids
-                for line in lines:
-                    if not line.account_id.reconcile:
-                        return False
-        return True
-            
     _constraints = [
         (_check_same_partner, 'You can only reconcile journal items with the same partner.', ['line_id']),
-        (_check_same_account, 'You can only reconcile journal items with the same account.',['line_id']),
-        (_check_allow_reconcile,'To reconcile , allow reconcilation must be true in account.',['line_id']),
     ]
     
     def reconcile_partial_check(self, cr, uid, ids, type='auto', context=None):
@@ -1715,7 +1696,8 @@ class account_move_reconcile(osv.osv):
         if not total:
             self.pool.get('account.move.line').write(cr, uid,
                 map(lambda x: x.id, rec.line_partial_ids),
-                {'reconcile_id': rec.id }
+                {'reconcile_id': rec.id },
+                context=context
             )
         return True
 

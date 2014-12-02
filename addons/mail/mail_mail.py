@@ -22,6 +22,7 @@
 import base64
 import logging
 import re
+from email.utils import formataddr
 from urllib import urlencode
 from urlparse import urljoin
 
@@ -216,10 +217,9 @@ class mail_mail(osv.Model):
         if email_reply_to and mail.model and mail.res_id:
             document_name = self.pool.get(mail.model).name_get(cr, SUPERUSER_ID, [mail.res_id], context=context)[0]
             if document_name:
-                # sanitize document name
-                sanitized_doc_name = re.sub(r'[^\w+.]+', '-', document_name[1])
                 # generate reply to
-                email_reply_to = _('"Followers of %s" <%s>') % (sanitized_doc_name, email_reply_to)
+
+                email_reply_to = formataddr((_('Followers of %s') % document_name[1], email_reply_to))
 
         return email_reply_to
 
@@ -240,10 +240,9 @@ class mail_mail(osv.Model):
         # 2. if 'partner' is specified, but no related document: Partner Name <email>
         # 3; fallback on mail.email_to that we split to have an email addresses list
         if partner and mail.record_name:
-            sanitized_record_name = re.sub(r'[^\w+.]+', '-', mail.record_name)
-            email_to = [_('"Followers of %s" <%s>') % (sanitized_record_name, partner.email)]
+            email_to = [formataddr((_('Followers of %s') % mail.record_name, partner.email))]
         elif partner:
-            email_to = ['%s <%s>' % (partner.name, partner.email)]
+            email_to = [formataddr((partner.name, partner.email))]
         else:
             email_to = tools.email_split(mail.email_to)
 
@@ -306,8 +305,23 @@ class mail_mail(osv.Model):
                         object_id = mail.res_id and ('%s-%s' % (mail.res_id, mail.model)),
                         subtype = 'html',
                         subtype_alternative = 'plain')
-                    res = ir_mail_server.send_email(cr, uid, msg,
-                        mail_server_id=mail.mail_server_id.id, context=context)
+                    try:
+                        res = ir_mail_server.send_email(
+                            cr, uid,
+                            msg,
+                            mail_server_id=mail.mail_server_id.id,
+                            context=context
+                        )
+                    except AssertionError as error:
+                        if error.message == ir_mail_server.NO_VALID_RECIPIENT:
+                            # No valid recipient found for this particular
+                            # mail item -> ignore error to avoid blocking
+                            # delivery to next recipients, if any. If this is
+                            # the only recipient, the mail will show as failed.
+                            _logger.warning("Ignoring invalid recipients for mail.mail %s: %s",
+                                            mail.message_id, email.get('email_to'))
+                        else:
+                            raise
                 if res:
                     mail.write({'state': 'sent', 'message_id': res})
                     mail_sent = True
