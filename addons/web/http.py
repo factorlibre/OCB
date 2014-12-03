@@ -37,6 +37,9 @@ import session
 
 _logger = logging.getLogger(__name__)
 
+from .memcached_session_store import MemcachedSessionStore
+from openerp.tools import config
+
 #----------------------------------------------------------
 # RequestHandler
 #----------------------------------------------------------
@@ -517,10 +520,19 @@ class Root(object):
         self.load_addons()
 
         # Setup http sessions
-        path = session_path()
-        self.session_store = werkzeug.contrib.sessions.FilesystemSessionStore(path)
+        if config.get('memcached_session_store'):
+            memcached_servers = config.get('memcached_servers',
+                "['127.0.0.1']")
+            memcached_servers = eval(memcached_servers)
+            self.session_store = MemcachedSessionStore(
+                servers=memcached_servers)
+            _logger.debug('HTTP Sessions stored in Memcached: %s'
+                % memcached_servers)
+        else:
+            path = session_path()
+            self.session_store = werkzeug.contrib.sessions.FilesystemSessionStore(path)
+            _logger.debug('HTTP sessions stored in: %s', path)
         self.session_lock = threading.Lock()
-        _logger.debug('HTTP sessions stored in: %s', path)
 
     def __call__(self, environ, start_response):
         """ Handle a WSGI request
