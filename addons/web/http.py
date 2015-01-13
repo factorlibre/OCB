@@ -448,6 +448,8 @@ def session_context(request, session_store, session_lock, sid):
             session_store.save(request.session)
 
 def session_gc(session_store):
+    if isinstance(session_store, MemcachedSessionStore):
+        return True
     if random.random() < 0.001:
         # we keep session one week
         last_week = time.time() - 60*60*24*7
