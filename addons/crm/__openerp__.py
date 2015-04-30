@@ -96,12 +96,12 @@ Dashboard for CRM will include:
 
         'res_config_view.xml',
     ],
-    'demo': [
-        'crm_demo.xml',
-        'crm_lead_demo.xml',
-        'crm_phonecall_demo.xml',
-        'crm_action_rule_demo.xml',
-    ],
+    # 'demo': [
+    #     'crm_demo.xml',
+    #     'crm_lead_demo.xml',
+    #     'crm_phonecall_demo.xml',
+    #     'crm_action_rule_demo.xml',
+    # ],
     'test': [
         'test/crm_lead_message.yml',
         'test/lead2opportunity2win.yml',
