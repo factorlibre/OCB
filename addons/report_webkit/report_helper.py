@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2010 Camptocamp SA (http://www.camptocamp.com) 
+# Copyright (c) 2010 Camptocamp SA (http://www.camptocamp.com)
 # All Right Reserved
 #
 # Authors : Nicolas Bessi (Camptocamp)
@@ -30,9 +30,11 @@
 #
 ##############################################################################
 
-from openerp import pooler
+from openerp import pooler, addons
 from openerp.osv import orm
 from tools.translate import _
+from mako.template import Template
+
 
 class WebKitHelper(object):
     """Set of usefull report helper"""
@@ -57,19 +59,19 @@ class WebKitHelper(object):
         toreturn = '<img style="%s%s" src="data:image/%s;base64,%s" />'%(
             width,
             height,
-            type, 
+            type,
             str(img))
         return toreturn
-            
-            
+
+
     def get_logo_by_name(self, name, company_id=None):
         """Return logo by name"""
         header_obj = self.pool.get('ir.header_img')
         domain = [('name','=',name)]
         if company_id:
             domain.append(('company_id', '=', company_id))
-        header_img_id = header_obj.search(self.cursor, 
-                                          self.uid, 
+        header_img_id = header_obj.search(self.cursor,
+                                          self.uid,
                                           domain)
         if not header_img_id :
             msg = _("No header image named '%s' found.") % name
@@ -83,11 +85,16 @@ class WebKitHelper(object):
 
         head = header_obj.browse(self.cursor, self.uid, header_img_id)
         return (head.img, head.type)
-            
+
     def embed_logo_by_name(self, name, width=0, height=0, unit="px", company_id=None):
         """Return HTML embedded logo by name"""
         img, type = self.get_logo_by_name(name, company_id=company_id)
         return self.embed_image(type, img, width, height, unit)
-        
+
+    def get_mako_template(obj, *args):
+        "Return a mako template object base on path in args"
+        template_path = addons.get_module_resource(*args)
+        return Template(filename=template_path, input_encoding='utf-8')
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
