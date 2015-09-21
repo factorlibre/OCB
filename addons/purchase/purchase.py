@@ -1260,7 +1260,6 @@ class purchase_order_line(osv.osv):
             taxes = product.supplier_taxes_id
         fpos = fiscal_position_id and account_fiscal_position.browse(cr, uid, fiscal_position_id, context=context) or False
         taxes_ids = account_fiscal_position.map_tax(cr, uid, fpos, taxes, context=context)
-        price = self.pool['account.tax']._fix_tax_included_price(cr, uid, price, product.supplier_taxes_id, taxes_ids)
         res['value'].update({'price_unit': price, 'taxes_id': taxes_ids})
 
         return res
