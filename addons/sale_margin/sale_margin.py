@@ -55,7 +55,13 @@ class sale_order_line(osv.osv):
             cur = line.order_id.pricelist_id.currency_id
             res[line.id] = 0
             if line.product_id:
-                tmp_margin = line.price_subtotal - ((line.purchase_price or line.product_id.standard_price) * line.product_uos_qty)
+                tmp_margin = line.price_subtotal - (
+                    cur_obj.compute(
+                        cr, uid, line.order_id.company_id.currency_id.id,
+                        line.order_id.currency_id.id,
+                        (line.purchase_price or
+                         line.product_id.standard_price), round=False)
+                    * line.product_uos_qty)
                 res[line.id] = cur_obj.round(cr, uid, cur, tmp_margin)
         return res
 
