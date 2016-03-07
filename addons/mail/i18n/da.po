@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2015
+# jonas jensen <j.jensen@tcomp.dk>, 2015
+# Jonathan Stein <cgs@image.dk>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2015-08-27 09:12+0000\n"
-"Last-Translator: Hans Henrik Gabelgaard <hhg@gabelgaard.org>\n"
+"PO-Revision-Date: 2016-01-17 18:54+0000\n"
+"Last-Translator: Jonathan Stein <cgs@image.dk>\n"
 "Language-Team: Danish (http://www.transifex.com/odoo/odoo-8/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +24,7 @@ msgstr ""
 #: code:addons/mail/mail_thread.py:384
 #, python-format
 msgid "%s created"
-msgstr ""
+msgstr "%s oprettet"
 
 #. module: mail
 #: code:addons/mail/res_users.py:98
@@ -42,7 +44,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:156
 #, python-format
 msgid "(no email address)"
-msgstr ""
+msgstr "(ingen e-mail adresse)"
 
 #. module: mail
 #: code:addons/mail/wizard/invite.py:44
@@ -282,7 +284,7 @@ msgstr "Anvend"
 #: model:ir.actions.client,name:mail.action_mail_archives_feeds
 #: model:ir.ui.menu,name:mail.mail_archivesfeeds
 msgid "Archives"
-msgstr ""
+msgstr "Arkiverede"
 
 #. module: mail
 #. openerp-web
@@ -294,7 +296,7 @@ msgstr ""
 #. module: mail
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 msgid "Attach a file"
-msgstr ""
+msgstr "Vedhæft fil"
 
 #. module: mail
 #: field:mail.compose.message,attachment_ids:0
@@ -877,7 +879,7 @@ msgstr ""
 #: model:ir.actions.client,name:mail.action_mail_inbox_feeds
 #: model:ir.ui.menu,name:mail.mail_inboxfeeds
 msgid "Inbox"
-msgstr ""
+msgstr "Indbakke"
 
 #. module: mail
 #: help:mail.compose.message,parent_id:0 help:mail.message,parent_id:0
@@ -1119,7 +1121,7 @@ msgstr "Besked- og kommunikations historik"
 #: model:ir.ui.menu,name:mail.mail_feeds
 #: model:ir.ui.menu,name:mail.mail_feeds_main
 msgid "Messaging"
-msgstr ""
+msgstr "Beskeder"
 
 #. module: mail
 #: view:res.users:mail.view_users_form_mail
@@ -1165,7 +1167,7 @@ msgstr ""
 #. module: mail
 #: model:ir.ui.menu,name:mail.mail_group_root
 msgid "My Groups"
-msgstr ""
+msgstr "Mine diskussionsgrupper"
 
 #. module: mail
 #: field:mail.group,name:0
@@ -1286,7 +1288,7 @@ msgstr ""
 #. module: mail
 #: model:ir.ui.menu,name:mail.mail_my_stuff
 msgid "Organizer"
-msgstr ""
+msgstr "Organiser"
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_search selection:mail.mail,state:0
@@ -1453,7 +1455,7 @@ msgstr "Modtaget"
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #: field:mail.message,partner_ids:0 field:mail.wizard.invite,partner_ids:0
 msgid "Recipients"
-msgstr ""
+msgstr "Modtagere"
 
 #. module: mail
 #: field:mail.alias,alias_force_thread_id:0
@@ -1790,7 +1792,7 @@ msgstr ""
 #. module: mail
 #: field:mail.compose.message,to_read:0 field:mail.message,to_read:0
 msgid "To read"
-msgstr ""
+msgstr "Til læsning"
 
 #. module: mail
 #: model:ir.actions.client,name:mail.action_mail_star_feeds
@@ -1803,13 +1805,13 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:123
 #, python-format
 msgid "To:"
-msgstr ""
+msgstr "Til:"
 
 #. module: mail
 #: model:ir.actions.client,name:mail.action_mail_to_me_feeds
 #: model:ir.ui.menu,name:mail.mail_tomefeeds
 msgid "To: me"
-msgstr ""
+msgstr "Til: mig"
 
 #. module: mail
 #: view:mail.group:mail.view_group_form
@@ -1985,7 +1987,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:310
 #, python-format
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_form
@@ -2010,7 +2012,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:348
 #, python-format
 msgid "like"
-msgstr ""
+msgstr "ligesom"
 
 #. module: mail
 #. openerp-web
@@ -2024,26 +2026,26 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:310
 #, python-format
 msgid "more"
-msgstr ""
+msgstr "flere"
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:334
 #, python-format
 msgid "more messages"
-msgstr ""
+msgstr "flere beskeder"
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail_followers.xml:62
 #, python-format
 msgid "more."
-msgstr ""
+msgstr "flere."
 
 #. module: mail
 #: view:base.config.settings:mail.view_general_configuration_mail_alias_domain
 msgid "mycompany.odoo.com"
-msgstr ""
+msgstr "mycompany.odoo.com"
 
 #. module: mail
 #. openerp-web
