@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2016-02-06 19:24+0000\n"
+"PO-Revision-Date: 2016-03-07 06:50+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Slovak (http://www.transifex.com/odoo/odoo-8/language/sk/)\n"
 "MIME-Version: 1.0\n"
@@ -530,7 +530,7 @@ msgstr "Návrh"
 #. module: survey
 #: field:survey.user_input,email:0
 msgid "E-mail"
-msgstr ""
+msgstr "Email"
 
 #. module: survey
 #: view:survey.survey:survey.survey_form
@@ -903,7 +903,7 @@ msgstr ""
 #. module: survey
 #: selection:survey.user_input,type:0
 msgid "Manually"
-msgstr ""
+msgstr "Manuálne"
 
 #. module: survey
 #: selection:survey.question,type:0
@@ -1164,7 +1164,7 @@ msgstr ""
 #. module: survey
 #: field:survey.page,title:0
 msgid "Page Title"
-msgstr ""
+msgstr "Názov stránky"
 
 #. module: survey
 #: field:survey.page,sequence:0
@@ -1725,7 +1725,7 @@ msgstr ""
 #. module: survey
 #: view:website:survey.sfinished
 msgid "Thank you!"
-msgstr ""
+msgstr "Ďakujeme Vám!"
 
 #. module: survey
 #: model:survey.label,value:survey.frow_2_5_3
