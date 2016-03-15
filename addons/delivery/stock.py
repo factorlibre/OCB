@@ -31,17 +31,17 @@ class stock_picking(osv.osv):
     def _cal_weight(self, cr, uid, ids, name, args, context=None):
         res = {}
         for picking in self.browse(cr, uid, ids, context=context):
-            total_weight = total_weight_net = 0.00
-
-            for move in picking.move_lines:
-                if move.state != 'cancel':
-                    total_weight += move.weight
-                    total_weight_net += move.weight_net
-
+            cr.execute(
+                """SELECT COALESCE(sum(weight), 0.0) as total_weight,
+                          COALESCE(SUM(weight_net), 0.0) as total_net_weight
+                FROM stock_move
+                where picking_id=%s
+                  and state != 'cancel'""", (picking.id,))
+            sql_res = cr.fetchone()
             res[picking.id] = {
-                                'weight': total_weight,
-                                'weight_net': total_weight_net,
-                              }
+                'weight': sql_res[0],
+                'weight_net': sql_res[1],
+            }
         return res
 
 
