@@ -63,7 +63,12 @@ class account_invoice(models.Model):
     @api.one
     @api.depends('invoice_line.price_subtotal', 'tax_line.amount')
     def _compute_amount(self):
-        self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line)
+        self.env.cr.execute("""SELECT COALESCE(SUM(price_subtotal), 0.0)
+            FROM account_invoice_line
+            WHERE invoice_id=%s""", (self.id,))
+        sql_res = self.env.cr.fetchone()
+        amount_untaxed = sql_res[0]
+        self.amount_untaxed = amount_untaxed
         self.amount_tax = sum(line.amount for line in self.tax_line)
         self.amount_total = self.amount_untaxed + self.amount_tax
 
