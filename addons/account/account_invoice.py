@@ -63,7 +63,12 @@ class account_invoice(models.Model):
     @api.one
     @api.depends('invoice_line.price_subtotal', 'tax_line.amount')
     def _compute_amount(self):
-        self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line)
+        self.env.cr.execute("""SELECT COALESCE(SUM(price_subtotal), 0.0)
+            FROM account_invoice_line
+            WHERE invoice_id=%s""", (self.id,))
+        sql_res = self.env.cr.fetchone()
+        amount_untaxed = sql_res[0]
+        self.amount_untaxed = amount_untaxed
         self.amount_tax = sum(line.amount for line in self.tax_line)
         self.amount_total = self.amount_untaxed + self.amount_tax
 
@@ -1351,13 +1356,14 @@ class account_invoice_line(models.Model):
         fp_taxes = fpos.map_tax(taxes)
         values['invoice_line_tax_id'] = fp_taxes.ids
 
+        values['price_unit'] = price_unit
         if type in ('in_invoice', 'in_refund'):
             if price_unit and price_unit != product.standard_price:
                 values['price_unit'] = price_unit
             else:
-                values['price_unit'] = self.env['account.tax']._fix_tax_included_price(product.standard_price, taxes, fp_taxes.ids)
+                values['price_unit'] = product.standard_price
         else:
-            values['price_unit'] = self.env['account.tax']._fix_tax_included_price(product.lst_price, taxes, fp_taxes.ids)
+            values['price_unit'] = product.lst_price
 
         values['uos_id'] = product.uom_id.id
         if uom_id:
