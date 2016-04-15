@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2016-03-12 08:55+0000\n"
+"PO-Revision-Date: 2016-03-25 14:55+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/odoo/odoo-8/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Acquirente"
 #. module: payment
 #: field:payment.transaction,acquirer_reference:0
 msgid "Acquirer Order Reference"
-msgstr ""
+msgstr "Riferimento Ordine dell'Acquirente"
 
 #. module: payment
 #: field:payment.transaction,partner_address:0
@@ -87,7 +87,7 @@ msgstr "Azienda"
 #. module: payment
 #: field:payment.acquirer,fees_active:0
 msgid "Compute fees"
-msgstr "Calcola le tasse"
+msgstr "Calcola le imposte"
 
 #. module: payment
 #: field:payment.transaction,partner_country_id:0
@@ -138,7 +138,7 @@ msgstr "Email"
 #. module: payment
 #: field:payment.acquirer,environment:0
 msgid "Environment"
-msgstr ""
+msgstr "Ambiente"
 
 #. module: payment
 #: selection:payment.transaction,state:0
@@ -163,12 +163,12 @@ msgstr ""
 #. module: payment
 #: field:payment.acquirer,fees_dom_fixed:0
 msgid "Fixed domestic fees"
-msgstr ""
+msgstr "Tasse nazionali fisse"
 
 #. module: payment
 #: field:payment.acquirer,fees_int_fixed:0
 msgid "Fixed international fees"
-msgstr ""
+msgstr "Tasse internazionali fisse"
 
 #. module: payment
 #: field:payment.transaction,message_follower_ids:0
@@ -329,7 +329,7 @@ msgstr "Acquirente del pagamento"
 #: model:ir.ui.menu,name:payment.payment_acquirer_menu
 #: view:payment.acquirer:payment.acquirer_list
 msgid "Payment Acquirers"
-msgstr ""
+msgstr "Acquirenti di Pagamento"
 
 #. module: payment
 #: model:ir.model,name:payment.model_payment_transaction
@@ -362,7 +362,7 @@ msgstr "Telefono"
 #. module: payment
 #: field:payment.acquirer,validation:0
 msgid "Process Method"
-msgstr ""
+msgstr "Metodo del Processo"
 
 #. module: payment
 #: selection:payment.acquirer,environment:0
@@ -373,7 +373,7 @@ msgstr "Produzione"
 #: view:payment.acquirer:payment.acquirer_search
 #: field:payment.acquirer,provider:0
 msgid "Provider"
-msgstr ""
+msgstr "Provider"
 
 #. module: payment
 #: help:payment.transaction,acquirer_reference:0
@@ -455,12 +455,12 @@ msgstr "Data di convalida"
 #. module: payment
 #: field:payment.acquirer,fees_dom_var:0
 msgid "Variable domestic fees (in percents)"
-msgstr ""
+msgstr "Tasse nazionali variabili (in percentuale)"
 
 #. module: payment
 #: field:payment.acquirer,fees_int_var:0
 msgid "Variable international fees (in percents)"
-msgstr ""
+msgstr "Tasse internazionali variabili (in percentuale)"
 
 #. module: payment
 #: field:payment.acquirer,website_published:0
