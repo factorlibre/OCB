@@ -727,19 +727,27 @@ class stock_picking(osv.osv):
         '''
         res = {}
         for pick in self.browse(cr, uid, ids, context=context):
-            if (not pick.move_lines) or any([x.state == 'draft' for x in pick.move_lines]):
+            cr.execute("""SELECT state
+                FROM stock_move
+                WHERE picking_id=%s
+                GROUP BY state""", (pick.id,))
+            sql_res = cr.dictfetchall()
+            if (not sql_res) or any([move_res['state'] == 'draft'
+                                     for move_res in sql_res]):
                 res[pick.id] = 'draft'
                 continue
-            if all([x.state == 'cancel' for x in pick.move_lines]):
+            if all([move_res['state'] == 'cancel' for move_res in sql_res]):
                 res[pick.id] = 'cancel'
                 continue
-            if all([x.state in ('cancel', 'done') for x in pick.move_lines]):
+            if all([move_res['state'] in ('cancel', 'done')
+                    for move_res in sql_res]):
                 res[pick.id] = 'done'
                 continue
 
             order = {'confirmed': 0, 'waiting': 1, 'assigned': 2}
             order_inv = {0: 'confirmed', 1: 'waiting', 2: 'assigned'}
-            lst = [order[x.state] for x in pick.move_lines if x.state not in ('cancel', 'done')]
+            lst = [order[move_res['state']] for move_res in sql_res
+                   if move_res['state'] not in ('cancel', 'done')]
             if pick.move_type == 'one':
                 res[pick.id] = order_inv[min(lst)]
             else:
@@ -751,11 +759,16 @@ class stock_picking(osv.osv):
                     if any(x == 2 for x in lst):
                         res[pick.id] = 'partially_available'
                     else:
-                        #if all moves aren't assigned, check if we have one product partially available
-                        for move in pick.move_lines:
-                            if move.partially_available:
-                                res[pick.id] = 'partially_available'
-                                break
+                        # if all moves aren't assigned, check if we have one
+                        # product partially available
+                        cr.execute("""SELECT id
+                            FROM stock_move
+                            WHERE partially_available=true
+                              AND picking_id=%s
+                            LIMIT 1""", (pick.id,))
+                        move_partially_available = cr.fetchone()
+                        if move_partially_available:
+                            res[pick.id] = 'partially_available'
         return res
 
     def _get_pickings(self, cr, uid, ids, context=None):

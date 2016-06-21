@@ -198,12 +198,16 @@ class stock_picking(osv.osv):
         result = {}
         for pick in self.browse(cr, uid, ids, context=context):
             result[pick.id] = 'none'
-            for move in pick.move_lines:
-                if move.invoice_state == 'invoiced':
-                    result[pick.id] = 'invoiced'
-                elif move.invoice_state == '2binvoiced':
-                    result[pick.id] = '2binvoiced'
-                    break
+            cr.execute("""SELECT invoice_state
+                FROM stock_move
+                WHERE picking_id=%s
+                GROUP BY invoice_state""", (pick.id,))
+            sql_res = cr.fetchall()
+            move_states = [row[0] for row in sql_res]
+            if "2binvoiced" in move_states:
+                result[pick.id] = "2binvoiced"
+            elif all(inv_state == "invoiced" for inv_state in move_states):
+                result[pick.id] = "invoiced"
         return result
 
     def __get_picking_move(self, cr, uid, ids, context={}):
