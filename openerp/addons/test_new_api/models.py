@@ -143,6 +143,18 @@ class Discussion(models.Model):
     participants = fields.Many2many('res.users')
     messages = fields.One2many('test_new_api.message', 'discussion')
     message_changes = fields.Integer(string='Message changes')
+    important_messages = fields.One2many('test_new_api.message', 'discussion',
+                                         domain=[('important', '=', True)])
+    very_important_messages = fields.One2many(
+        'test_new_api.message', 'discussion',
+        domain=lambda self: self._domain_very_important())
+    emails = fields.One2many('test_new_api.emailmessage', 'discussion')
+    important_emails = fields.One2many('test_new_api.emailmessage', 'discussion',
+                                       domain=[('important', '=', True)])
+
+    def _domain_very_important(self):
+        """Ensure computed O2M domains work as expected."""
+        return [("important", "=", True)]
 
     @api.onchange('moderator')
     def _onchange_moderator(self):
@@ -167,6 +179,7 @@ class Message(models.Model):
     author_partner = fields.Many2one(
         'res.partner', compute='_compute_author_partner',
         search='_search_author_partner')
+    important = fields.Boolean()
 
     @api.one
     @api.constrains('author', 'discussion')
@@ -221,6 +234,14 @@ class Message(models.Model):
     def _search_author_partner(self, operator, value):
         return [('author.partner_id', operator, value)]
 
+
+class EmailMessage(models.Model):
+    _name = 'test_new_api.emailmessage'
+    _inherits = {'test_new_api.message': 'message'}
+
+    message = fields.Many2one('test_new_api.message', 'Message',
+                              required=True, ondelete='cascade')
+    email_to = fields.Char('To')
 
 class Multi(models.Model):
     """ Model for testing multiple onchange methods in cascade that modify a

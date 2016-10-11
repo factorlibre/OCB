@@ -462,6 +462,12 @@ class TestNewFields(common.TransactionCase):
         self.assertEqual(messages, self.env.ref('test_new_api.message_0_1'))
 
 
+        # writing on very_important_messages should call its domain method
+        self.assertIn(message, discussion.very_important_messages)
+        discussion.write({'very_important_messages': [(5,)]})
+        self.assertFalse(discussion.very_important_messages)
+        self.assertFalse(message.exists())
+
 
 class TestMagicFields(common.TransactionCase):
 
