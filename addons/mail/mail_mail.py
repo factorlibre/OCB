@@ -301,6 +301,7 @@ class mail_mail(osv.Model):
                         subtype_alternative='plain',
                         headers=headers)
                     try:
+                        msg._headers.append(('Return-Path', mail.email_from))
                         res = ir_mail_server.send_email(cr, uid, msg,
                                                     mail_server_id=mail.mail_server_id.id,
                                                     context=context)
