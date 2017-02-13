@@ -53,11 +53,12 @@ class sale_order(osv.Model):
                 result['value']['carrier_id'] = dtype
         return result
 
-
     def _delivery_unset(self, cr, uid, ids, context=None):
         sale_obj = self.pool['sale.order.line']
+        sale_order_obj = self.pool['sale.order']
         line_ids = sale_obj.search(cr, uid, [('order_id', 'in', ids), ('is_delivery', '=', True)],context=context)
         sale_obj.unlink(cr, uid, line_ids, context=context)
+        sale_order_obj.browse(cr, uid, ids, context=context).refresh()
 
     def delivery_set(self, cr, uid, ids, context=None):
         line_obj = self.pool.get('sale.order.line')
