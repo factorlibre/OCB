@@ -56,7 +56,7 @@ class pos_order_report(osv.osv):
                     count(*) as nbr,
                     s.date_order as date,
                     sum(l.qty * u.factor) as product_qty,
-                    sum(l.qty * l.price_unit) as price_total,
+                    sum(l.qty * l.price_unit) - sum((l.qty * l.price_unit) * (l.discount / 100)) as price_total,
                     sum((l.qty * l.price_unit) * (l.discount / 100)) as total_discount,
                     (sum(l.qty*l.price_unit)/sum(l.qty * u.factor))::decimal as average_price,
                     sum(cast(to_char(date_trunc('day',s.date_order) - date_trunc('day',s.create_date),'DD') as int)) as delay_validation,
