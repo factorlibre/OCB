@@ -66,6 +66,7 @@ class pos_details(report_sxw.rml_parse):
             ('company_id', '=', company_id)
         ])
         for pos in pos_obj.browse(self.cr, self.uid, pos_ids, context=self.localcontext):
+            currency = pos.session_id.currency_id
             for pol in pos.lines:
                 result = {
                     'code': pol.product_id.default_code,
@@ -80,7 +81,7 @@ class pos_details(report_sxw.rml_parse):
                     'uom': pol.product_id.uom_id.name
                 }
                 data.append(result)
-                self.total += result['total']
+                self.total += currency.round(result['total'])
                 self.qty += result['qty']
                 self.discount += result['discount']
         if data:
