@@ -3,62 +3,59 @@
 # * mail
 # 
 # Translators:
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
-# Khwunchai Jaengsawang <khwunchai.j@ku.th>, 2015
-# Prakobmai Sakhon <sakorn.pr@live.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2016-08-11 03:58+0000\n"
-"Last-Translator: Khwunchai Jaengsawang <khwunchai.j@ku.th>\n"
-"Language-Team: Thai (http://www.transifex.com/odoo/odoo-8/language/th/)\n"
+"PO-Revision-Date: 2016-06-22 23:35+0000\n"
+"Last-Translator: Martin Trigaux\n"
+"Language-Team: Spanish (Peru) (http://www.transifex.com/odoo/odoo-8/language/es_PE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: th\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: es_PE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mail
 #: code:addons/mail/mail_thread.py:384
 #, python-format
 msgid "%s created"
-msgstr "%s สร้างแล้ว"
+msgstr "%s creados"
 
 #. module: mail
 #: code:addons/mail/res_users.py:98
 #, python-format
 msgid "%s has joined the %s network."
-msgstr "%s ได้เข้าร่วมเครือค่าย %s"
+msgstr "%s se ha unido %s a la red."
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:29
 #, python-format
 msgid "&ograve"
-msgstr "&ograve"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:156
 #, python-format
 msgid "(no email address)"
-msgstr "(ไม่มีอีเมล์)"
+msgstr "(sin dirección de email)"
 
 #. module: mail
 #: code:addons/mail/wizard/invite.py:44
 #, python-format
 msgid ""
 "<div><p>Hello,</p><p>%s invited you to follow %s document: %s.</p></div>"
-msgstr "<div><p>สวัสดี</p><p>%s ได้เรียนเชิญให้คุณติดตาม %s เอกสาร: %s</p></div>"
+msgstr "<div><p>Hola,</p><p>%s te ha invitado a seguir %s documento: %s.</p></div>"
 
 #. module: mail
 #: code:addons/mail/wizard/invite.py:47
 #, python-format
 msgid ""
 "<div><p>Hello,</p><p>%s invited you to follow a new document.</p></div>"
-msgstr "<div><p>สวัสดี</p><p>%s ได้เรียนเชิญใช้คุณติดตามเอกสารใหม่</p></div>"
+msgstr "<div><p>Hola,</p><p>%s te ha invitado a seguir un nuevo documento.</p></div>"
 
 #. module: mail
 #: code:addons/mail/mail_thread.py:134
@@ -89,7 +86,7 @@ msgid ""
 "                    follow.\n"
 "                </p>\n"
 "            "
-msgstr "<p>\n                    <b>เยี่ยม!</b> กล่องขาเข้าของคุณว่างเปล่า\n                </p><p>\n                    กล่องขาเข้าของคุณจะมีข้อความส่วนตัวและอีเมลที่ส่งถึงคุณอยู่\n                    รวมไปถึงข้อมูลที่เกี่ยวกับเอกสารที่คุณติดตามอยู่\n                </p>\n            "
+msgstr ""
 
 #. module: mail
 #: model:ir.actions.client,help:mail.action_mail_to_me_feeds
@@ -146,12 +143,12 @@ msgstr ""
 #: code:addons/mail/mail_message.py:763
 #, python-format
 msgid "Access Denied"
-msgstr "ไม่ได้รับอนุญาตให้เข้าใช้"
+msgstr "Acceso Denegado"
 
 #. module: mail
 #: model:ir.model,name:mail.model_res_groups
 msgid "Access Groups"
-msgstr "กลุ่มการเข้าถึง"
+msgstr "Grupos de Acceso"
 
 #. module: mail
 #: help:mail.message.subtype,default:0
@@ -161,17 +158,17 @@ msgstr ""
 #. module: mail
 #: view:mail.alias:mail.view_mail_alias_search
 msgid "Active"
-msgstr "เปิดใช้งาน"
+msgstr "Activo"
 
 #. module: mail
 #: field:mail.compose.message,active_domain:0
 msgid "Active domain"
-msgstr ""
+msgstr "Dominio activo"
 
 #. module: mail
 #: view:mail.wizard.invite:mail.mail_wizard_invite_form
 msgid "Add Followers"
-msgstr "เพิ่มผู้ติดตาม"
+msgstr "Agregar Seguidores"
 
 #. module: mail
 #. openerp-web
@@ -184,72 +181,72 @@ msgstr ""
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #: view:mail.wizard.invite:mail.mail_wizard_invite_form
 msgid "Add contacts to notify..."
-msgstr "เพิ่มผู้ติดต่อที่จะแจ้ง..."
+msgstr "Agregar contactos para notificar..."
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail_followers.xml:28
 #, python-format
 msgid "Add others"
-msgstr "เพิ่มอื่นๆ"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,partner_ids:0
 msgid "Additional Contacts"
-msgstr "รายชื่อเพิ่มเติม"
+msgstr "Contactos Adicionales"
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_form
 msgid "Advanced"
-msgstr "ขั้นสูง"
+msgstr "Avanzado"
 
 #. module: mail
 #: view:mail.alias:mail.view_mail_alias_form
 #: view:mail.alias:mail.view_mail_alias_tree field:mail.group,alias_id:0
 #: field:res.users,alias_id:0
 msgid "Alias"
-msgstr "ชื่อแทน"
+msgstr "Apodo"
 
 #. module: mail
 #: view:res.users:mail.view_users_form_mail
 msgid "Alias Accepts Emails From"
-msgstr ""
+msgstr "El Alias Acepta Correos Desde"
 
 #. module: mail
 #: field:mail.alias,alias_contact:0
 msgid "Alias Contact Security"
-msgstr ""
+msgstr "Contacto de Seguridad del Alias"
 
 #. module: mail
 #: field:base.config.settings,alias_domain:0
 msgid "Alias Domain"
-msgstr "ชื่อโดเมน"
+msgstr "Alias del Dominio"
 
 #. module: mail
 #: field:mail.alias,alias_name:0
 msgid "Alias Name"
-msgstr ""
+msgstr "Nombre del Alias"
 
 #. module: mail
 #: field:mail.alias,alias_domain:0
 msgid "Alias domain"
-msgstr "ชื่อโดเมน"
+msgstr "Dominio del Alias"
 
 #. module: mail
 #: field:mail.alias,alias_model_id:0
 msgid "Aliased Model"
-msgstr ""
+msgstr "Modelo del Alias"
 
 #. module: mail
 #: model:ir.actions.act_window,name:mail.action_view_mail_alias
 #: model:ir.ui.menu,name:mail.mail_alias_menu
 msgid "Aliases"
-msgstr "นามแฝง"
+msgstr "Alias"
 
 #. module: mail
 #: selection:res.partner,notify_email:0
 msgid "All Messages"
-msgstr "ข้อความทั้งหมด"
+msgstr "Todos los Mensajes"
 
 #. module: mail
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
@@ -263,7 +260,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail_followers.xml:62
 #, python-format
 msgid "And"
-msgstr "และ"
+msgstr "Y"
 
 #. module: mail
 #: help:mail.compose.message,no_auto_thread:0
@@ -278,31 +275,31 @@ msgstr ""
 #: code:addons/mail/static/src/js/mail_followers.js:102
 #, python-format
 msgid "Apply"
-msgstr "นำไปใช้"
+msgstr "Aplicar"
 
 #. module: mail
 #: model:ir.actions.client,name:mail.action_mail_archives_feeds
 #: model:ir.ui.menu,name:mail.mail_archivesfeeds
 msgid "Archives"
-msgstr "ที่เก็บถาวร"
+msgstr "Archivos"
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:74
 #, python-format
 msgid "Attach a File"
-msgstr "แนบไฟล์"
+msgstr ""
 
 #. module: mail
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 msgid "Attach a file"
-msgstr "แนบไฟล์"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,attachment_ids:0
 #: view:mail.mail:mail.view_mail_form field:mail.message,attachment_ids:0
 msgid "Attachments"
-msgstr "ไฟล์ที่แนบมา"
+msgstr "Adjuntos"
 
 #. module: mail
 #: selection:mail.alias,alias_contact:0
@@ -313,7 +310,7 @@ msgstr ""
 #: field:mail.compose.message,author_id:0 view:mail.mail:mail.view_mail_search
 #: field:mail.message,author_id:0
 msgid "Author"
-msgstr "ผู้เขียน"
+msgstr "Autor"
 
 #. module: mail
 #: help:mail.compose.message,author_id:0 help:mail.message,author_id:0
@@ -331,22 +328,22 @@ msgstr ""
 #. module: mail
 #: field:mail.group,group_public_id:0
 msgid "Authorized Group"
-msgstr "กลุ่มที่ได้รับสิทธิ์"
+msgstr ""
 
 #. module: mail
 #: field:mail.mail,auto_delete:0
 msgid "Auto Delete"
-msgstr "ลบอัตโนมัติ"
+msgstr "Auto Eliminar"
 
 #. module: mail
 #: field:mail.group,group_ids:0
 msgid "Auto Subscription"
-msgstr "สมัครสมาชิกอัตโนมัติ"
+msgstr ""
 
 #. module: mail
 #: view:mail.message.subtype:mail.view_mail_message_subtype_form
 msgid "Auto subscription"
-msgstr "สมัครสมาชิกอัตโนมัติ"
+msgstr ""
 
 #. module: mail
 #: help:mail.compose.message,body:0 help:mail.message,body:0
@@ -366,7 +363,7 @@ msgstr ""
 #. module: mail
 #: view:mail.mail:mail.view_mail_form
 msgid "Body"
-msgstr "เนื้อหา"
+msgstr "Cuerpo"
 
 #. module: mail
 #. openerp-web
@@ -376,17 +373,17 @@ msgstr "เนื้อหา"
 #: view:mail.wizard.invite:mail.mail_wizard_invite_form
 #, python-format
 msgid "Cancel"
-msgstr "ยกเลิก"
+msgstr "Cancelar"
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_tree
 msgid "Cancel Email"
-msgstr "ยกเลิกอีเมล์"
+msgstr ""
 
 #. module: mail
 #: selection:mail.mail,state:0
 msgid "Cancelled"
-msgstr "ยกเลิกแล้ว"
+msgstr "Cancelado"
 
 #. module: mail
 #: help:mail.mail,email_cc:0
@@ -396,7 +393,7 @@ msgstr ""
 #. module: mail
 #: field:mail.mail,email_cc:0
 msgid "Cc"
-msgstr "สำเนา"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,child_ids:0 field:mail.message,child_ids:0
@@ -407,7 +404,7 @@ msgstr ""
 #: selection:mail.compose.message,type:0 view:mail.mail:mail.view_mail_search
 #: selection:mail.message,type:0
 msgid "Comment"
-msgstr "ความคิดเห็น"
+msgstr "Comentario"
 
 #. module: mail
 #. openerp-web
@@ -416,32 +413,32 @@ msgstr "ความคิดเห็น"
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #, python-format
 msgid "Compose Email"
-msgstr "เขียนอีเมล"
+msgstr "Redactar Email"
 
 #. module: mail
 #: field:mail.compose.message,composition_mode:0
 msgid "Composition mode"
-msgstr "โหมดการเขียน"
+msgstr ""
 
 #. module: mail
 #: field:mail.notification,partner_id:0
 msgid "Contact"
-msgstr "ผู้ติดต่อ"
+msgstr "Contacto"
 
 #. module: mail
 #: view:mail.message:mail.view_message_search
 msgid "Content"
-msgstr "เนื้อหา"
+msgstr ""
 
 #. module: mail
 #: field:ir.attachment,file_type:0
 msgid "Content Type"
-msgstr "ประเภทเนื้อหา"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,body:0 field:mail.message,body:0
 msgid "Contents"
-msgstr "เนื้อหา"
+msgstr ""
 
 #. module: mail
 #: field:mail.alias,create_uid:0 field:mail.compose.message,create_uid:0
@@ -449,7 +446,7 @@ msgstr "เนื้อหา"
 #: field:mail.message,create_uid:0 field:mail.message.subtype,create_uid:0
 #: field:mail.wizard.invite,create_uid:0
 msgid "Created by"
-msgstr "สร้างโดย"
+msgstr "Creado por"
 
 #. module: mail
 #: field:mail.alias,create_date:0 field:mail.compose.message,create_date:0
@@ -457,12 +454,12 @@ msgstr "สร้างโดย"
 #: field:mail.message,create_date:0 field:mail.message.subtype,create_date:0
 #: field:mail.wizard.invite,create_date:0
 msgid "Created on"
-msgstr "สร้างเมื่อ"
+msgstr "Creado en"
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_search
 msgid "Creation Month"
-msgstr "เดือนที่สร้าง"
+msgstr "Mes de Creación"
 
 #. module: mail
 #: help:mail.compose.message,starred:0 help:mail.message,starred:0
@@ -478,28 +475,28 @@ msgstr ""
 #: code:addons/mail/res_partner.py:31
 #, python-format
 msgid "Customers"
-msgstr "ลูกค้า"
+msgstr "Clientes"
 
 #. module: mail
 #: field:mail.compose.message,date:0 field:mail.message,date:0
 msgid "Date"
-msgstr "วันที่"
+msgstr "Fecha"
 
 #. module: mail
 #: help:mail.group,message_last_post:0 help:mail.thread,message_last_post:0
 #: help:res.partner,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr "วันที่ของข้อความสุดท้ายที่ลงบันทึก"
+msgstr "Fecha del ultimo mensaje actualizado en el registro"
 
 #. module: mail
 #: field:mail.message.subtype,default:0
 msgid "Default"
-msgstr "ค่าเริ่มต้น"
+msgstr "Por Defecto"
 
 #. module: mail
 #: field:mail.alias,alias_defaults:0
 msgid "Default Values"
-msgstr "ค่าปริยาย"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -507,19 +504,19 @@ msgstr "ค่าปริยาย"
 #: code:addons/mail/static/src/xml/mail.xml:110
 #, python-format
 msgid "Delete this attachment"
-msgstr "ลบสิ่งที่แนบมานี้"
+msgstr "Eliminar este adjunto"
 
 #. module: mail
 #: selection:mail.mail,state:0
 msgid "Delivery Failed"
-msgstr "การส่งผิดพลาด"
+msgstr ""
 
 #. module: mail
 #: field:mail.group,description:0
 #: view:mail.message.subtype:mail.view_mail_message_subtype_form
 #: field:mail.message.subtype,description:0
 msgid "Description"
-msgstr "รายละเอียด"
+msgstr "Descripción"
 
 #. module: mail
 #: help:mail.message.subtype,description:0
@@ -531,22 +528,22 @@ msgstr ""
 #. module: mail
 #: model:ir.actions.client,name:mail.action_mail_group_feeds
 msgid "Discussion Group"
-msgstr "กลุ่มสนทนา"
+msgstr "Grupo de Discusión"
 
 #. module: mail
 #: model:ir.model,name:mail.model_mail_group
 msgid "Discussion group"
-msgstr "กลุ่มสนทนา"
+msgstr ""
 
 #. module: mail
 #: model:mail.message.subtype,name:mail.mt_comment
 msgid "Discussions"
-msgstr "การสนทนา"
+msgstr ""
 
 #. module: mail
 #: field:res.users,display_groups_suggestions:0
 msgid "Display Groups Suggestions"
-msgstr "แสดง"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -558,14 +555,14 @@ msgstr ""
 #. module: mail
 #: model:ir.model,name:mail.model_mail_followers
 msgid "Document Followers"
-msgstr "ผู้ติดตามเอกสาร"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:253
 #, python-format
 msgid "Done"
-msgstr "เสร็จสิ้น"
+msgstr "Realizado"
 
 #. module: mail
 #. openerp-web
@@ -579,13 +576,13 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail_followers.xml:40
 #, python-format
 msgid "Edit subscription"
-msgstr "แก้ไขการสมัครรับข้อมูลข่าวสาร"
+msgstr ""
 
 #. module: mail
 #: selection:mail.compose.message,type:0 view:mail.mail:mail.view_mail_search
 #: selection:mail.message,type:0
 msgid "Email"
-msgstr "อีเมล"
+msgstr "Email"
 
 #. module: mail
 #: view:mail.group:mail.view_group_form
@@ -605,7 +602,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model,name:mail.model_mail_thread
 msgid "Email Thread"
-msgstr ""
+msgstr "Hilo de Email"
 
 #. module: mail
 #: help:res.users,alias_id:0
@@ -647,13 +644,13 @@ msgstr ""
 #: model:ir.ui.menu,name:mail.menu_mail_mail
 #: view:mail.mail:mail.view_mail_tree
 msgid "Emails"
-msgstr "อีเมล"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/update.py:91
 #, python-format
 msgid "Error"
-msgstr "ผิดพลาด"
+msgstr "Error"
 
 #. module: mail
 #: code:addons/mail/update.py:91
@@ -669,17 +666,17 @@ msgstr ""
 #. module: mail
 #: selection:mail.alias,alias_contact:0
 msgid "Everyone"
-msgstr "ทุกคน"
+msgstr "Todos"
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_search
 msgid "Extended Filters..."
-msgstr "ตัวกรองเพิ่มเติม"
+msgstr "Filtros Extendidos..."
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_search
 msgid "Failed"
-msgstr "ล้มเหลว"
+msgstr "Fallado"
 
 #. module: mail
 #: help:mail.message.subtype,relation_field:0
@@ -699,7 +696,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail_followers.xml:12
 #, python-format
 msgid "Follow"
-msgstr "ติดตาม"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -712,19 +709,19 @@ msgstr "ติดตาม"
 #: field:res.partner,message_follower_ids:0
 #, python-format
 msgid "Followers"
-msgstr "ติดตาม"
+msgstr ""
 
 #. module: mail
 #: view:mail.followers:mail.view_mail_subscription_form
 msgid "Followers Form"
-msgstr "แบบฟอร์มผู้ติดตาม"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:127
 #, python-format
 msgid "Followers of"
-msgstr "ผู้ติดตามของ"
+msgstr ""
 
 #. module: mail
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
@@ -741,62 +738,62 @@ msgstr ""
 #. module: mail
 #: selection:mail.alias,alias_contact:0
 msgid "Followers only"
-msgstr "ผู้ติดตามเท่านั้น"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail_followers.xml:14
 #, python-format
 msgid "Following"
-msgstr "กำลังติดตาม"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,email_from:0 field:mail.message,email_from:0
 msgid "From"
-msgstr "จาก"
+msgstr "De"
 
 #. module: mail
 #: code:addons/mail/res_users.py:75
 #, python-format
 msgid "Go to the configuration panel"
-msgstr "ไปยังแผงการตั้งค่า"
+msgstr ""
 
 #. module: mail
 #: view:mail.group:mail.view_group_search
 msgid "Group"
-msgstr "กลุ่ม"
+msgstr "Grupo"
 
 #. module: mail
 #: view:mail.alias:mail.view_mail_alias_search
 #: view:mail.mail:mail.view_mail_search
 #: view:mail.message:mail.view_message_search
 msgid "Group By"
-msgstr "จัดกลุ่มโดย"
+msgstr "Agrupado por"
 
 #. module: mail
 #: view:mail.group:mail.view_group_form
 msgid "Group Form"
-msgstr "แบบฟอร์มกลุ่ม"
+msgstr ""
 
 #. module: mail
 #: view:mail.group:mail.view_group_form view:mail.group:mail.view_group_tree
 msgid "Group Name"
-msgstr "ชื่อกลุ่ม"
+msgstr "Nombre del Grupo"
 
 #. module: mail
 #: view:mail.group:mail.view_group_tree
 msgid "Groups"
-msgstr "กลุ่มต่าง ๆ"
+msgstr "Grupos"
 
 #. module: mail
 #: model:mail.group,name:mail.group_hr_policies
 msgid "HR Policies"
-msgstr "นโยบาย HR"
+msgstr ""
 
 #. module: mail
 #: view:mail.message:mail.view_message_search
 msgid "Has attachments"
-msgstr "มีไฟล์แนบมา"
+msgstr ""
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_form field:mail.mail,headers:0
@@ -806,7 +803,7 @@ msgstr ""
 #. module: mail
 #: field:mail.message.subtype,hidden:0
 msgid "Hidden"
-msgstr "ซ่อน"
+msgstr "Oculto"
 
 #. module: mail
 #: help:mail.message.subtype,hidden:0
@@ -819,7 +816,7 @@ msgstr ""
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "ยึดติดสรุปตัวแชท (จำนวนของข้อความ., …) สรุปนี้จะถูกจัดในรูปแบบ html โดยตรงเพื่อที่จะถูกใส่ในมุมมองคัมบัง"
+msgstr ""
 
 #. module: mail
 #: field:mail.alias,id:0 field:mail.compose.message,id:0
@@ -846,7 +843,7 @@ msgstr ""
 #: help:mail.group,message_unread:0 help:mail.thread,message_unread:0
 #: help:res.partner,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "ถ้าการตรวจสอบข้อความใหม่ให้ระบุความสนใจของคุณ"
+msgstr "Si está marcado nuevos mensajes requieren su atención."
 
 #. module: mail
 #: help:mail.wizard.invite,send_mail:0
@@ -860,7 +857,7 @@ msgstr ""
 msgid ""
 "If you have setup a catch-all email domain redirected to the Odoo server, "
 "enter the domain name here."
-msgstr ""
+msgstr "Si tiene un dominio de correo electrónico general redireccionado a un servidor de Odoo, ponga el nombre del dominio aquí."
 
 #. module: mail
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
@@ -879,7 +876,7 @@ msgstr ""
 #: model:ir.actions.client,name:mail.action_mail_inbox_feeds
 #: model:ir.ui.menu,name:mail.mail_inboxfeeds
 msgid "Inbox"
-msgstr "กล่องขาเข้า"
+msgstr ""
 
 #. module: mail
 #: help:mail.compose.message,parent_id:0 help:mail.message,parent_id:0
@@ -890,7 +887,7 @@ msgstr ""
 #: code:addons/mail/mail_message.py:177
 #, python-format
 msgid "Invalid Action!"
-msgstr "การกระทำไม่ถูกต้อง!"
+msgstr ""
 
 #. module: mail
 #: constraint:mail.alias:0
@@ -908,19 +905,19 @@ msgstr ""
 #. module: mail
 #: model:ir.model,name:mail.model_mail_wizard_invite
 msgid "Invite wizard"
-msgstr ""
+msgstr "Asistente de Invitación"
 
 #. module: mail
 #: field:mail.mail,notification:0
 msgid "Is Notification"
-msgstr "เป็นการแจ้งเตือน"
+msgstr ""
 
 #. module: mail
 #: field:mail.group,message_is_follower:0
 #: field:mail.thread,message_is_follower:0
 #: field:res.partner,message_is_follower:0
 msgid "Is a Follower"
-msgstr "เป็นผู้ติดตาม"
+msgstr "Es un Seguidor"
 
 #. module: mail
 #. openerp-web
@@ -928,19 +925,19 @@ msgstr "เป็นผู้ติดตาม"
 #: view:mail.group:mail.view_group_kanban
 #, python-format
 msgid "Join Group"
-msgstr "เข้าร่วมกลุ่ม"
+msgstr ""
 
 #. module: mail
 #: model:ir.actions.act_window,name:mail.action_view_groups
 #: model:ir.ui.menu,name:mail.mail_allgroups
 msgid "Join a group"
-msgstr "เข้าร่วมกลุ่ม"
+msgstr ""
 
 #. module: mail
 #: field:mail.group,message_last_post:0 field:mail.thread,message_last_post:0
 #: field:res.partner,message_last_post:0
 msgid "Last Message Date"
-msgstr "วันที่ของข้อความสุดท้าย"
+msgstr "Fecha del último mensaje"
 
 #. module: mail
 #: field:mail.alias,write_uid:0 field:mail.compose.message,write_uid:0
@@ -948,7 +945,7 @@ msgstr "วันที่ของข้อความสุดท้าย"
 #: field:mail.message,write_uid:0 field:mail.message.subtype,write_uid:0
 #: field:mail.wizard.invite,write_uid:0
 msgid "Last Updated by"
-msgstr "อัพเดทครั้งสุดท้ายโดย"
+msgstr "Actualizado última vez por"
 
 #. module: mail
 #: field:mail.alias,write_date:0 field:mail.compose.message,write_date:0
@@ -956,7 +953,7 @@ msgstr "อัพเดทครั้งสุดท้ายโดย"
 #: field:mail.message,write_date:0 field:mail.message.subtype,write_date:0
 #: field:mail.wizard.invite,write_date:0
 msgid "Last Updated on"
-msgstr "อัพเดทครั้งสุดท้ายเมื่อ"
+msgstr "Ultima Actualización"
 
 #. module: mail
 #: help:mail.wizard.invite,partner_ids:0
@@ -974,7 +971,7 @@ msgstr ""
 #. module: mail
 #: field:mail.compose.message,is_log:0
 msgid "Log an Internal Note"
-msgstr "บันทึกข้อความใหม่"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -982,13 +979,13 @@ msgstr "บันทึกข้อความใหม่"
 #: code:addons/mail/static/src/xml/mail.xml:57
 #, python-format
 msgid "Log an internal note"
-msgstr "เขียนบันทึกใหม่"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/mail_mail.py:340
 #, python-format
 msgid "Mail Delivery Failed"
-msgstr "การส่งอีเมลล้มเหลว"
+msgstr ""
 
 #. module: mail
 #: field:ir.ui.menu,mail_group_id:0
@@ -1010,12 +1007,12 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:257
 #, python-format
 msgid "Mark as Todo"
-msgstr "ตั้งเป็นสิงที่ต้องทำ"
+msgstr ""
 
 #. module: mail
 #: field:mail.group,image_medium:0
 msgid "Medium-sized photo"
-msgstr "ภาพขนาดกลาง"
+msgstr ""
 
 #. module: mail
 #: help:mail.group,image_medium:0
@@ -1037,7 +1034,7 @@ msgstr ""
 #: field:mail.mail,mail_message_id:0 view:mail.message:mail.view_message_form
 #: field:mail.notification,message_id:0 field:mail.wizard.invite,message:0
 msgid "Message"
-msgstr "ข้อความ"
+msgstr "Mensaje"
 
 #. module: mail
 #: field:mail.compose.message,record_name:0 field:mail.message,record_name:0
@@ -1047,7 +1044,7 @@ msgstr ""
 #. module: mail
 #: field:mail.message.subtype,name:0
 msgid "Message Type"
-msgstr "ประเภทข้อความ"
+msgstr ""
 
 #. module: mail
 #: help:mail.mail,email_to:0
@@ -1104,24 +1101,24 @@ msgstr ""
 #: view:mail.message:mail.view_message_tree field:mail.thread,message_ids:0
 #: field:res.partner,message_ids:0
 msgid "Messages"
-msgstr "ข้อความ"
+msgstr ""
 
 #. module: mail
 #: view:mail.message:mail.view_message_search
 msgid "Messages Search"
-msgstr "ค้นหาข้อความ"
+msgstr ""
 
 #. module: mail
 #: help:mail.group,message_ids:0 help:mail.thread,message_ids:0
 #: help:res.partner,message_ids:0
 msgid "Messages and communication history"
-msgstr "ข้อความและประวัติการสื่อสาร"
+msgstr "Historial de mensajes y comunicación"
 
 #. module: mail
 #: model:ir.ui.menu,name:mail.mail_feeds
 #: model:ir.ui.menu,name:mail.mail_feeds_main
 msgid "Messaging"
-msgstr "ข้อความ"
+msgstr ""
 
 #. module: mail
 #: view:res.users:mail.view_users_form_mail
@@ -1132,7 +1129,7 @@ msgstr ""
 #: view:mail.alias:mail.view_mail_alias_search
 #: field:mail.message.subtype,res_model:0
 msgid "Model"
-msgstr "โมเดล"
+msgstr "Modelo"
 
 #. module: mail
 #: help:mail.followers,res_model:0 help:mail.wizard.invite,res_model:0
@@ -1148,31 +1145,31 @@ msgstr ""
 #. module: mail
 #: view:mail.mail:mail.view_mail_search
 msgid "Month"
-msgstr "เดือน"
+msgstr "Mes"
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:255
 #, python-format
 msgid "Move to Inbox"
-msgstr "ย้ายไปกล่องขาเข้า"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:130
 #, python-format
 msgid "My Followers"
-msgstr "ผู้ติดตามของฉัน"
+msgstr ""
 
 #. module: mail
 #: model:ir.ui.menu,name:mail.mail_group_root
 msgid "My Groups"
-msgstr "กลุ่มของฉัน"
+msgstr ""
 
 #. module: mail
 #: field:mail.group,name:0
 msgid "Name"
-msgstr "ชื่อ"
+msgstr "Nombre"
 
 #. module: mail
 #: help:mail.compose.message,record_name:0 help:mail.message,record_name:0
@@ -1182,27 +1179,27 @@ msgstr ""
 #. module: mail
 #: selection:res.partner,notify_email:0
 msgid "Never"
-msgstr "ไม่"
+msgstr "Nunca"
 
 #. module: mail
 #: code:addons/mail/mail_thread.py:172
 #, python-format
 msgid "New"
-msgstr "ใหม่"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/js/mail_followers.js:205
 #, python-format
 msgid "No followers"
-msgstr "ไม่มีผู้ติดตาม"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:217
 #, python-format
 msgid "No messages."
-msgstr "ไม่มีข้อความ"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,no_auto_thread:0
@@ -1213,7 +1210,7 @@ msgstr ""
 #. module: mail
 #: view:mail.mail:mail.view_mail_search
 msgid "Notification"
-msgstr "การแจ้งเตือน"
+msgstr ""
 
 #. module: mail
 #: model:ir.actions.act_window,name:mail.action_view_notifications
@@ -1223,30 +1220,30 @@ msgstr "การแจ้งเตือน"
 #: field:mail.message,notification_ids:0
 #: view:mail.notification:mail.view_notification_tree
 msgid "Notifications"
-msgstr "การแจ้งให้ทราบ"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,notified_partner_ids:0
 #: field:mail.message,notified_partner_ids:0
 msgid "Notified partners"
-msgstr "คู่ค้าที่แจ้งเตือน"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,notify:0
 msgid "Notify followers"
-msgstr "แจ้งเตือนผู้ติดตาม"
+msgstr ""
 
 #. module: mail
 #: help:mail.compose.message,notify:0
 msgid "Notify followers of the document (mass post only)"
-msgstr "แจ้งเตือนผู้ที่ติดตามเอกสาร (โพสแบบจำนวนมากเท่านั้น)"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/js/mail_followers.js:207
 #, python-format
 msgid "One follower"
-msgstr "ผู้ติดตามหนึ่งคน"
+msgstr ""
 
 #. module: mail
 #: view:mail.group:mail.view_group_form
@@ -1288,17 +1285,17 @@ msgstr ""
 #. module: mail
 #: model:ir.ui.menu,name:mail.mail_my_stuff
 msgid "Organizer"
-msgstr "ผู้จัด"
+msgstr ""
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_search selection:mail.mail,state:0
 msgid "Outgoing"
-msgstr "ขาออก"
+msgstr ""
 
 #. module: mail
 #: model:ir.model,name:mail.model_mail_mail
 msgid "Outgoing Mails"
-msgstr ""
+msgstr "Correos Salientes"
 
 #. module: mail
 #: field:mail.compose.message,mail_server_id:0
@@ -1309,12 +1306,12 @@ msgstr ""
 #. module: mail
 #: field:mail.alias,alias_user_id:0
 msgid "Owner"
-msgstr "เจ้าของ"
+msgstr "Propietario"
 
 #. module: mail
 #: field:mail.message.subtype,parent_id:0
 msgid "Parent"
-msgstr "แม่"
+msgstr "Padre"
 
 #. module: mail
 #: field:mail.compose.message,parent_id:0 field:mail.message,parent_id:0
@@ -1347,7 +1344,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model,name:mail.model_res_partner
 msgid "Partner"
-msgstr "พาร์ทเนอร์"
+msgstr "Socio"
 
 #. module: mail
 #: code:addons/mail/res_partner.py:51
@@ -1370,7 +1367,7 @@ msgstr ""
 #. module: mail
 #: field:mail.group,image:0
 msgid "Photo"
-msgstr "รูปภาพ"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -1384,14 +1381,14 @@ msgstr ""
 #: code:addons/mail/static/src/js/many2many_tags_email.js:63
 #, python-format
 msgid "Please complete partner's informations and Email"
-msgstr "กรุณากรอกข้อมูลของคู่ค้าและอีเมล"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:224
 #, python-format
 msgid "Please, wait while the file is uploading."
-msgstr "กรุณารอสักครู่  จนกว่าการอัพโหลดไฟล์เสร็จสิ้น"
+msgstr ""
 
 #. module: mail
 #: help:mail.alias,alias_contact:0
@@ -1413,17 +1410,17 @@ msgstr ""
 #. module: mail
 #: field:mail.group,public:0
 msgid "Privacy"
-msgstr "ความเป็นส่วนตัว"
+msgstr "Privacidad"
 
 #. module: mail
 #: selection:mail.group,public:0
 msgid "Private"
-msgstr "ส่วนตัว"
+msgstr ""
 
 #. module: mail
 #: selection:mail.group,public:0
 msgid "Public"
-msgstr "เปิดเผย"
+msgstr ""
 
 #. module: mail
 #: model:mail.group,name:mail.group_rd
@@ -1434,12 +1431,12 @@ msgstr ""
 #: code:addons/mail/wizard/mail_compose_message.py:191
 #, python-format
 msgid "Re:"
-msgstr "ตอบกลับ:"
+msgstr ""
 
 #. module: mail
 #: field:mail.notification,is_read:0
 msgid "Read"
-msgstr "อ่าน"
+msgstr ""
 
 #. module: mail
 #: field:res.partner,notify_email:0
@@ -1449,13 +1446,13 @@ msgstr ""
 #. module: mail
 #: view:mail.mail:mail.view_mail_search selection:mail.mail,state:0
 msgid "Received"
-msgstr "ได้รับ"
+msgstr "Recibido"
 
 #. module: mail
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #: field:mail.message,partner_ids:0 field:mail.wizard.invite,partner_ids:0
 msgid "Recipients"
-msgstr "ผู้รับ"
+msgstr ""
 
 #. module: mail
 #: field:mail.alias,alias_force_thread_id:0
@@ -1465,7 +1462,7 @@ msgstr ""
 #. module: mail
 #: field:mail.mail,references:0
 msgid "References"
-msgstr "แหล่งอ้างอิง"
+msgstr "Referencias"
 
 #. module: mail
 #: field:mail.compose.message,res_id:0 field:mail.followers,res_id:0
@@ -1477,7 +1474,7 @@ msgstr ""
 #: field:mail.compose.message,model:0 field:mail.followers,res_model:0
 #: field:mail.message,model:0 field:mail.wizard.invite,res_model:0
 msgid "Related Document Model"
-msgstr ""
+msgstr "Modelo del Documento Relacionado"
 
 #. module: mail
 #: field:mail.group,menu_id:0
@@ -1487,7 +1484,7 @@ msgstr ""
 #. module: mail
 #: field:mail.followers,partner_id:0
 msgid "Related Partner"
-msgstr "บริษัทคู่ค้าที่เกี่ยวข้อง"
+msgstr "Partner Relacionado"
 
 #. module: mail
 #: field:mail.message.subtype,relation_field:0
@@ -1499,7 +1496,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail_followers.xml:41
 #, python-format
 msgid "Remove this follower"
-msgstr "นำผู้ติดตามนี้ออก"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -1507,7 +1504,7 @@ msgstr "นำผู้ติดตามนี้ออก"
 #: view:mail.mail:mail.view_mail_form
 #, python-format
 msgid "Reply"
-msgstr "ตอบ"
+msgstr ""
 
 #. module: mail
 #: help:mail.compose.message,reply_to:0 help:mail.message,reply_to:0
@@ -1519,12 +1516,12 @@ msgstr ""
 #. module: mail
 #: field:mail.compose.message,reply_to:0 field:mail.message,reply_to:0
 msgid "Reply-To"
-msgstr "ตอบกลับไปยัง"
+msgstr ""
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_form view:mail.mail:mail.view_mail_tree
 msgid "Retry"
-msgstr "ลองใหม่"
+msgstr ""
 
 #. module: mail
 #: field:mail.mail,body_html:0
@@ -1534,7 +1531,7 @@ msgstr ""
 #. module: mail
 #: help:mail.mail,body_html:0
 msgid "Rich-text/HTML message"
-msgstr "ข้อความแบบ Rich-text/HTML"
+msgstr ""
 
 #. module: mail
 #: view:mail.alias:mail.view_mail_alias_search
@@ -1557,24 +1554,24 @@ msgstr ""
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #, python-format
 msgid "Send"
-msgstr "ส่ง"
+msgstr "Enviar"
 
 #. module: mail
 #: field:mail.wizard.invite,send_mail:0
 msgid "Send Email"
-msgstr "ส่งอีเมล"
+msgstr ""
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_form view:mail.mail:mail.view_mail_tree
 msgid "Send Now"
-msgstr "ส่งทันที"
+msgstr "Enviar Ahora"
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:54
 #, python-format
 msgid "Send a message"
-msgstr "ส่งข้อความ"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -1586,12 +1583,12 @@ msgstr ""
 #. module: mail
 #: view:mail.group:mail.view_group_form
 msgid "Send a message to the group"
-msgstr "ส่งข้อความถึงกลุ่ม"
+msgstr ""
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_search selection:mail.mail,state:0
 msgid "Sent"
-msgstr "ส่ง"
+msgstr "Enviar"
 
 #. module: mail
 #: code:addons/mail/mail_followers.py:155
@@ -1602,7 +1599,7 @@ msgstr ""
 #. module: mail
 #: field:mail.message.subtype,sequence:0
 msgid "Sequence"
-msgstr "กำหนดเลขที่เอกสาร"
+msgstr "Secuencia"
 
 #. module: mail
 #. openerp-web
@@ -1621,12 +1618,12 @@ msgstr ""
 #. module: mail
 #: view:mail.message:mail.view_message_search
 msgid "Show messages to read"
-msgstr "แสดงข้อความที่จะอ่าน"
+msgstr ""
 
 #. module: mail
 #: field:mail.group,image_small:0
 msgid "Small-sized photo"
-msgstr "รูปขนาดเล็ก"
+msgstr ""
 
 #. module: mail
 #: help:mail.group,image_small:0
@@ -1640,7 +1637,7 @@ msgstr ""
 #: field:mail.compose.message,starred:0 field:mail.message,starred:0
 #: field:mail.notification,starred:0
 msgid "Starred"
-msgstr "ติดดาว"
+msgstr ""
 
 #. module: mail
 #: help:mail.notification,starred:0
@@ -1651,24 +1648,24 @@ msgstr ""
 #: view:mail.mail:mail.view_mail_form view:mail.mail:mail.view_mail_search
 #: field:mail.mail,state:0
 msgid "Status"
-msgstr "สถานะ"
+msgstr "Estado"
 
 #. module: mail
 #: field:mail.compose.message,subject:0 field:mail.message,subject:0
 msgid "Subject"
-msgstr "ชื่อเรื่อง"
+msgstr "Asunto"
 
 #. module: mail
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 msgid "Subject..."
-msgstr "ชื่อเรื่อง..."
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,subtype_id:0 field:mail.followers,subtype_ids:0
 #: field:mail.message,subtype_id:0
 #: view:mail.message.subtype:mail.view_message_subtype_tree
 msgid "Subtype"
-msgstr "ประเภทย่อย"
+msgstr ""
 
 #. module: mail
 #: model:ir.actions.act_window,name:mail.action_view_message_subtype
@@ -1687,17 +1684,17 @@ msgstr ""
 #: field:mail.group,message_summary:0 field:mail.thread,message_summary:0
 #: field:res.partner,message_summary:0
 msgid "Summary"
-msgstr "สรุป"
+msgstr "Resumen"
 
 #. module: mail
 #: model:mail.group,name:mail.group_support
 msgid "Support"
-msgstr "สนับสนุน"
+msgstr ""
 
 #. module: mail
 #: selection:mail.compose.message,type:0 selection:mail.message,type:0
 msgid "System notification"
-msgstr "การแจ้งเตือนระบบ"
+msgstr ""
 
 #. module: mail
 #: help:mail.compose.message,notification_ids:0
@@ -1745,7 +1742,7 @@ msgid ""
 "The requested operation cannot be completed due to security restrictions. Please contact your system administrator.\n"
 "\n"
 "(Document type: %s, Operation: %s)"
-msgstr "ในเอกสารประเภท%s การขอ%sนี้ ไม่ได้รับอนุญาตเนื่องจากข้อจำกัดด้านความปลอดภัย กรุณาติดต่อผู้ดูแลระบบ"
+msgstr "La operación solicitada no pudo ser completada por restricciones de seguridad. Por favor contacte su administrador del sistema.\n\n(Tipo de Documento: %s, Operación: %s)"
 
 #. module: mail
 #: help:mail.group,image:0
@@ -1777,12 +1774,12 @@ msgstr ""
 #. module: mail
 #: field:mail.mail,email_to:0
 msgid "To"
-msgstr "ถึง"
+msgstr "Para"
 
 #. module: mail
 #: field:mail.mail,recipient_ids:0
 msgid "To (Partners)"
-msgstr "ถึง (คู่ค้า)"
+msgstr ""
 
 #. module: mail
 #: view:mail.message:mail.view_message_search
@@ -1798,20 +1795,20 @@ msgstr ""
 #: model:ir.actions.client,name:mail.action_mail_star_feeds
 #: model:ir.ui.menu,name:mail.mail_starfeeds
 msgid "To-do"
-msgstr "สิ่งที่จะทำ"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:123
 #, python-format
 msgid "To:"
-msgstr "ถึง:"
+msgstr ""
 
 #. module: mail
 #: model:ir.actions.client,name:mail.action_mail_to_me_feeds
 #: model:ir.ui.menu,name:mail.mail_tomefeeds
 msgid "To: me"
-msgstr "ถึง: ฉัน"
+msgstr ""
 
 #. module: mail
 #: view:mail.group:mail.view_group_form
@@ -1822,7 +1819,7 @@ msgstr ""
 #: field:mail.compose.message,type:0
 #: view:mail.message:mail.view_message_search field:mail.message,type:0
 msgid "Type"
-msgstr "ชนิด"
+msgstr "Tipo"
 
 #. module: mail
 #: code:addons/mail/mail_message.py:177
@@ -1837,7 +1834,7 @@ msgstr ""
 #: view:mail.group:mail.view_group_kanban
 #, python-format
 msgid "Unfollow"
-msgstr "เลิกติดตาม"
+msgstr ""
 
 #. module: mail
 #: sql_constraint:mail.alias:0
@@ -1849,14 +1846,14 @@ msgstr ""
 #: field:mail.group,message_unread:0 field:mail.thread,message_unread:0
 #: field:res.partner,message_unread:0
 msgid "Unread Messages"
-msgstr "ข้อความที่ยังไม่ได้อ่าน"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:223
 #, python-format
 msgid "Uploading error"
-msgstr "อัพโหลดไฟล์ล้มเหลว"
+msgstr ""
 
 #. module: mail
 #: field:mail.compose.message,use_active_domain:0
@@ -1872,7 +1869,7 @@ msgstr ""
 #: view:mail.alias:mail.view_mail_alias_search
 #: view:mail.mail:mail.view_mail_form view:mail.mail:mail.view_mail_tree
 msgid "User"
-msgstr "ผู้ใช้งาน"
+msgstr "Usuario"
 
 #. module: mail
 #. openerp-web
@@ -1884,7 +1881,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model,name:mail.model_res_users
 msgid "Users"
-msgstr "ผู้ใช้งาน"
+msgstr "Usuarios"
 
 #. module: mail
 #: help:mail.compose.message,vote_user_ids:0 help:mail.message,vote_user_ids:0
@@ -1901,7 +1898,7 @@ msgstr ""
 #: code:addons/mail/mail_group.py:174
 #, python-format
 msgid "Warning!"
-msgstr "คำเตือน!"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -1955,31 +1952,31 @@ msgstr ""
 msgid ""
 "You cannot delete those groups, as the Whole Company group is required by "
 "other modules."
-msgstr "คุณไม่สามารถลบกลุ่มได้.  มีการเรียกใช้งานจากโมดูลอื่น"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/mail_thread.py:171
 #, python-format
 msgid "You have %d unread messages"
-msgstr "คุณมี %d ข้อความที่ยังไม่ได้อ่าน"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/mail_thread.py:171
 #, python-format
 msgid "You have one unread message"
-msgstr "คุณมีหนึ่งข้อความที่ยังไม่ได้อ่าน"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/mail_mail.py:160
 #, python-format
 msgid "about"
-msgstr "เกี่ยวกับ"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/mail_mail.py:160
 #, python-format
 msgid "access"
-msgstr "เข้าถึง"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -1987,25 +1984,25 @@ msgstr "เข้าถึง"
 #: code:addons/mail/static/src/xml/mail.xml:310
 #, python-format
 msgid "and"
-msgstr "และ"
+msgstr ""
 
 #. module: mail
 #: view:mail.mail:mail.view_mail_form
 msgid "by"
-msgstr "โดย"
+msgstr "por"
 
 #. module: mail
 #: code:addons/mail/mail_thread.py:115
 #, python-format
 msgid "document"
-msgstr "เอกสาร"
+msgstr ""
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/js/mail_followers.js:209
 #, python-format
 msgid "followers"
-msgstr "ติดตาม"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -2026,7 +2023,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:310
 #, python-format
 msgid "more"
-msgstr "เพิ่มเติม"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -2045,7 +2042,7 @@ msgstr ""
 #. module: mail
 #: view:base.config.settings:mail.view_general_configuration_mail_alias_domain
 msgid "mycompany.odoo.com"
-msgstr "mycompany.odoo.com"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -2058,7 +2055,7 @@ msgstr ""
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #: view:mail.mail:mail.view_mail_form
 msgid "on"
-msgstr "เปิด"
+msgstr "en"
 
 #. module: mail
 #. openerp-web
@@ -2067,14 +2064,14 @@ msgstr "เปิด"
 #: view:mail.wizard.invite:mail.mail_wizard_invite_form
 #, python-format
 msgid "or"
-msgstr "หรือ"
+msgstr "o"
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:146
 #, python-format
 msgid "others..."
-msgstr "อื่นๆ"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -2088,7 +2085,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:334
 #, python-format
 msgid "show"
-msgstr "โชว์"
+msgstr "mostrar"
 
 #. module: mail
 #. openerp-web
@@ -2119,7 +2116,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:297
 #, python-format
 msgid "to"
-msgstr "ถึง"
+msgstr "para"
 
 #. module: mail
 #. openerp-web
@@ -2133,7 +2130,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/mail.xml:286
 #, python-format
 msgid "updated document"
-msgstr "เอกสารที่ปรับปรุง"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -2141,10 +2138,10 @@ msgstr "เอกสารที่ปรับปรุง"
 #: code:addons/mail/static/src/xml/mail.xml:111
 #, python-format
 msgid "uploading"
-msgstr "กำลังอัพโหลด"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/mail_mail.py:162
 #, python-format
 msgid "your messages"
-msgstr "ข้อความของคุณ"
+msgstr ""
