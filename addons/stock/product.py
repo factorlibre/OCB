@@ -146,7 +146,6 @@ class product_product(osv.osv):
         domain_move_in += self._get_domain_dates(cr, uid, ids, context=context) + [('state', 'not in', ('done', 'cancel', 'draft'))] + domain_products
         domain_move_out += self._get_domain_dates(cr, uid, ids, context=context) + [('state', 'not in', ('done', 'cancel', 'draft'))] + domain_products
         domain_quant += domain_products
-
         if context.get('lot_id'):
             domain_quant.append(('lot_id', '=', context['lot_id']))
         if context.get('owner_id'):
@@ -201,9 +200,10 @@ class product_product(osv.osv):
                 product_ids = self.search(cr, uid, [], context=context)
                 if product_ids:
                     #TODO: Still optimization possible when searching virtual quantities
-                    for element in self.browse(cr, uid, product_ids, context=context):
-                        if eval(str(element[field]) + operator + str(value)):
-                            ids.append(element.id)
+                    product_qty_available = self._product_available(cr, uid, product_ids, context=context)
+                    for product_id, qty_values in product_qty_available.iteritems():
+                        if eval(str(qty_values.get(field, 0.0)) + operator + str(value)):
+                            ids.append(product_id)
                     res.append(('id', 'in', ids))
         return res
 
