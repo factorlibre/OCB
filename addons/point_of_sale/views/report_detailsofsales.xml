@@ -84,15 +84,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2"><strong>Payment</strong></td>
-                    </tr>
-                    <tr t-foreach="getpayments(data['form'])" t-as="payment">
-                        <td><span t-esc="payment['name']"/></td>
-                        <td class="text-right">
-                            <strong t-esc="formatLang(payment['sum'], dp='Account', currency_obj=res_company.currency_id)"/>
-                        </td>
-                    </tr>
-                    <tr>
                         <td colspan="2"><strong>Summary</strong></td>
                     </tr>
                     <tr>
