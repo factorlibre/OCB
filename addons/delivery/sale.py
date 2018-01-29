@@ -95,7 +95,7 @@ class sale_order(osv.Model):
                 'tax_id': [(6, 0, taxes_ids)],
                 'is_delivery': True,
             }
-            res = line_obj.product_id_change(cr, uid, ids, order.pricelist_id.id, values['product_id'],
+            res = line_obj.product_id_change(cr, uid, [], order.pricelist_id.id, values['product_id'],
                                              qty=values['product_uom_qty'], uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
                                              lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False, context=None)
             if res['value'].get('purchase_price'):
