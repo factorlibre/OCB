@@ -1704,6 +1704,8 @@ class stock_move(osv.osv):
                 availability = 0
                 for quant in quant_obj.browse(cr, uid, quant_ids, context=context):
                     availability += quant.qty
+                    if availability > move.product_qty:
+                        break
                 res[move.id] = min(move.product_qty, availability)
         return res
 
