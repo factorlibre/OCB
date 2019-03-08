@@ -181,6 +181,8 @@ class stock_location(osv.osv):
             :param product: browse record (product.product)
             :rtype: char
         '''
+        if context.get('strategy_from_inventory', False):
+            return self._default_removal_strategy(cr, uid, context=context)
         if product.categ_id.removal_strategy_id:
             return product.categ_id.removal_strategy_id.method
         loc = location
@@ -2905,6 +2907,7 @@ class stock_inventory(osv.osv):
             ['filter', 'product_id', 'lot_id', 'partner_id', 'package_id']),
     ]
 
+
 class stock_inventory_line(osv.osv):
     _name = "stock.inventory.line"
     _description = "Inventory Line"
@@ -3045,6 +3048,7 @@ class stock_inventory_line(osv.osv):
         if diff > 0:
             domain = [('qty', '>', 0.0), ('package_id', '=', inventory_line.package_id.id), ('lot_id', '=', inventory_line.prod_lot_id.id), ('location_id', '=', inventory_line.location_id.id)]
             preferred_domain_list = [[('reservation_id', '=', False)], [('reservation_id.inventory_id', '!=', inventory_line.inventory_id.id)]]
+            context['strategy_from_inventory'] = True
             quants = quant_obj.quants_get_prefered_domain(cr, uid, move.location_id, move.product_id, move.product_qty, domain=domain, prefered_domain_list=preferred_domain_list, restrict_partner_id=move.restrict_partner_id.id, context=context)
             quant_obj.quants_reserve(cr, uid, quants, move, context=context)
         elif inventory_line.package_id:
