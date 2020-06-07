@@ -50,7 +50,7 @@ $.fn.ajaxSubmit = function(options) {
 		return this;
 	}
 	
-	var method, action, url, $form = this;
+	var method, action, url, isMsie, iframeSrc, $form = this;
 
 	if (typeof options == 'function') {
 		options = { success: options };
@@ -64,12 +64,16 @@ $.fn.ajaxSubmit = function(options) {
 		// clean url (don't include hash vaue)
 		url = (url.match(/^([^#]+)/)||[])[1];
 	}
-
+	// IE requires javascript:false in https, but this breaks chrome >83 and goes against spec.
+	// Instead of using javascript:false always, let's only apply it for IE.
+	isMsie = /(MSIE|Trident)/.test(navigator.userAgent || '');
+	iframeSrc = (isMsie && /^https/i.test(window.location.href || '')) ? 'javascript:false' : 'about:blank'; // eslint-disable-line no-script-url
+	
 	options = $.extend(true, {
 		url:  url,
 		success: $.ajaxSettings.success,
 		type: method || 'GET',
-		iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
+		iframeSrc : iframeSrc
 	}, options);
 
 	// hook for manipulating the form data before it is extracted;
