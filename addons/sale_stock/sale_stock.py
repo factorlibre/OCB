@@ -45,7 +45,10 @@ class sale_order(osv.osv):
                 continue
             group = sale.procurement_group_id
             if group:
-                res[sale.id] = all([proc.state in ['cancel', 'done'] for proc in group.procurement_ids])
+                if all([proc.state in ['cancel'] for proc in group.procurement_ids]):
+                    res[sale.id] = False
+                else:
+                    res[sale.id] = all([proc.state in ['cancel', 'done'] for proc in group.procurement_ids])
             else:
                 res[sale.id] = False
         return res
