@@ -1061,7 +1061,7 @@ const PosLoyaltyOrder = (Order) => class PosLoyaltyOrder extends Order {
                 });
             }
         }
-        return result;
+        return result.filter(({ reward }) => !this.disabledRewards.has(reward.id));
     }
     /**
      * Returns the reward such that when its reward product is added
@@ -1105,7 +1105,7 @@ const PosLoyaltyOrder = (Order) => class PosLoyaltyOrder extends Order {
                 }
             }
         }
-        return result;
+        return result.filter(({reward}) => !this.disabledRewards.has(reward.id));
     }
     /**
      * Applies a reward to the order, `_updateRewards` is expected to be called right after.
@@ -1147,6 +1147,7 @@ const PosLoyaltyOrder = (Order) => class PosLoyaltyOrder extends Order {
         for (const rewardLine of rewardLines) {
             this.orderlines.add(this._createLineFromVals(rewardLine));
         }
+        this.disabledRewards.add(reward.id);
         return true;
     }
     _createLineFromVals(vals) {
