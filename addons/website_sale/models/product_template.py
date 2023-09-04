@@ -406,7 +406,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _get_alternative_product_filter(self):
-        return self.env.ref('website_sale.dynamic_filter_cross_selling_alternative_products').id
+        return self.env.ref('website_sale.dynamic_snippet_alternative_product_templates').id
 
     # ---------------------------------------------------------
     # Rating Mixin API
@@ -558,3 +558,12 @@ class ProductTemplate(models.Model):
     def _website_show_quick_add(self):
         website = self.env['website'].get_current_website()
         return self.sale_ok and (not website.prevent_zero_price_sale or self._get_contextual_price())
+
+    def _get_contextual_price_tax_selection(self):
+        self.ensure_one()
+        price = self._get_contextual_price()
+        line_tax_type = self.env['ir.config_parameter'].sudo().get_param('account.show_line_subtotals_tax_selection')
+        company_taxes = self.taxes_id.filtered(lambda tax: tax.company_id == self.env.company)
+        if line_tax_type == "tax_included" and company_taxes:
+            price = company_taxes.compute_all(price, product=self, partner=self.env['res.partner'])['total_included']
+        return price

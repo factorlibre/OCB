@@ -58,7 +58,10 @@ class WebsiteSnippetFilter(models.Model):
             for res_product in res_products:
                 product = res_product.get('_record')
                 if not is_sample:
-                    res_product.update(product._get_combination_info_variant())
+                    if product._name == "product.product":
+                        res_product.update(product._get_combination_info_variant())
+                    elif product._name == "product.template":
+                        res_product.update(product._get_combination_info())
                     if records.env.context.get('add2cart_rerender'):
                         res_product['_add2cart_rerender'] = True
         return res_products
@@ -177,3 +180,7 @@ class WebsiteSnippetFilter(models.Model):
                 ])
                 products = self.env['product.product'].with_context(display_default_code=False).search(domain, limit=limit)
         return products
+
+    def _get_products_alternative_product_templates(self, website, limit, domain, context):
+        prods = self._get_products_alternative_products(website, limit, domain, context)
+        return prods.mapped("product_tmpl_id")
